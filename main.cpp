@@ -82,6 +82,7 @@ SDL_Rect gSpriteClips[ BUTTON_SPRITE_TOTAL ];
 
 
 LButton StartA,StartB,StartC;
+LButton NextA,NextB;
 
 LTexture::LTexture()
 {
@@ -205,6 +206,15 @@ void LButton::render(string path,int x,int y)
     Texturebutton.render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
 }
 
+void loadImage(string path)
+{
+    SDL_Texture* newTexture = NULL;
+    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+    SDL_FreeSurface( loadedSurface );
+    SDL_RenderClear(gRenderer);
+    SDL_RenderCopy(gRenderer,newTexture,NULL,NULL);
+}
 void Init()
 {
     bool success = true;
@@ -213,16 +223,7 @@ void Init()
     gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     SDL_SetRenderDrawColor( gRenderer,255,255,255,255);
-
-    SDL_Texture* newTexture = NULL;
-
-    SDL_Surface* loadedSurface = IMG_Load( "assets/stback.png" );
-//    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
-
-    newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-    SDL_FreeSurface( loadedSurface );
-    SDL_RenderClear(gRenderer);
-    SDL_RenderCopy(gRenderer,newTexture,NULL,NULL);
+    loadImage("assets/stback.png");
 }
 
 void close()
@@ -254,10 +255,16 @@ int main( int argc, char* args[] )
             {
                 quit = true;
             }
-            if(trangthai==0){
+            if(trangthai==0)
+            {
                 if(StartA.handleEvent(&e)) trangthai = 1;
                 StartB.handleEvent(&e);
                 if(StartC.handleEvent(&e)) quit = 1;
+            }
+            else if( trangthai == 1 )
+            {
+                NextA.handleEvent(&e);
+                NextB.handleEvent(&e);
             }
         }
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -270,6 +277,9 @@ int main( int argc, char* args[] )
         else if(trangthai == 1)
         {
             SDL_RenderClear(gRenderer);
+            loadImage("assets/background.png");
+            NextA.render( "assets/mainscreen/easybutton.png",500,500);
+            NextB.render( "assets/mainscreen/hardbutton.png",500,600);
         }
 
         SDL_RenderPresent( gRenderer );

@@ -469,3 +469,10 @@
 	<SDL.h>
 	<SDL_image.h>
 
+1710426415 source:c:\users\bogie\onedrive\documents\github\knight\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<stdio.h>
+	<string>
+	<bits/stdc++.h>
+
