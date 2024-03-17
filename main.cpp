@@ -216,7 +216,7 @@ void loadImage(string path)
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
     SDL_FreeSurface( loadedSurface );
-    SDL_RenderClear(gRenderer);
+//    SDL_RenderClear(gRenderer);
     SDL_RenderCopy(gRenderer,newTexture,NULL,NULL);
 }
 void Init()
@@ -284,6 +284,7 @@ int main( int argc, char* args[] )
         {
             SDL_RenderClear(gRenderer);
             loadImage("assets/background.png");
+            loadImage("assets/walk.png");
             NextA.render( "assets/mainscreen/easybutton.png",500,500,350,90);
             NextB.render( "assets/mainscreen/hardbutton.png",500,600,350,90);
         }
