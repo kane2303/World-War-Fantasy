@@ -1,7 +1,5 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include <stdio.h>
-#include <string>
 #include<bits/stdc++.h>
 using namespace std;
 const int SCREEN_WIDTH = 1280;
@@ -126,7 +124,6 @@ void LTexture::free()
 void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
 {
     SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
     if( clip != NULL )
     {
         renderQuad.w = clip->w;
@@ -210,21 +207,22 @@ void LButton::render(string path,int x,int y,int szX,int szY)
     Texturebutton.render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
 }
 
-void loadImage(string path)
+void loadImage(string path,int pX=0,int pY=0,int szX=SCREEN_WIDTH,int szY=SCREEN_HEIGHT)
 {
     SDL_Texture* newTexture = NULL;
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
     newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-    SDL_FreeSurface( loadedSurface );
-//    SDL_RenderClear(gRenderer);
-    SDL_RenderCopy(gRenderer,newTexture,NULL,NULL);
+    SDL_Rect renderQuad = { pX, pY, szX, szY };
+    SDL_RenderCopy(gRenderer,newTexture,NULL,&renderQuad);
+    SDL_DestroyTexture(newTexture);
+    newTexture=NULL;
 }
 void Init()
 {
     bool success = true;
-
     SDL_Init( SDL_INIT_VIDEO );
-    gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Knight", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     SDL_SetRenderDrawColor( gRenderer,255,255,255,255);
     loadImage("assets/background.png");
@@ -284,13 +282,13 @@ int main( int argc, char* args[] )
         {
             SDL_RenderClear(gRenderer);
             loadImage("assets/background.png");
-            loadImage("assets/walk.png");
             NextA.render( "assets/mainscreen/easybutton.png",500,500,350,90);
             NextB.render( "assets/mainscreen/hardbutton.png",500,600,350,90);
         }
         else if(trangthai == 2)
         {
             SDL_RenderClear(gRenderer);
+
         }
         SDL_RenderPresent( gRenderer );
     }
