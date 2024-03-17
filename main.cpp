@@ -6,9 +6,6 @@
 using namespace std;
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
-
-const int BUTTON_WIDTH = 350;
-const int BUTTON_HEIGHT = 90;
 const int TOTAL_BUTTONS = 4;
 
 enum LButtonSprite
@@ -53,7 +50,7 @@ public:
 
     bool handleEvent( SDL_Event* e );
 
-    void render(string path,int x,int y);
+    void render(string path,int x,int y,int szX,int szY);
 
 private:
     //vi tri cua nut
@@ -61,6 +58,9 @@ private:
 
     //trang thai nut hien tai
     LButtonSprite mCurrentSprite;
+
+    //size cua nut
+    int BUTTON_WIDTH,BUTTON_HEIGHT;
 };
 //anh cua nut
 LTexture Texturebutton;
@@ -150,6 +150,8 @@ LButton::LButton()
 {
     mPosition.x = 0;
     mPosition.y = 0;
+    BUTTON_WIDTH = 0;
+    BUTTON_HEIGHT = 0;
 
     mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
 }
@@ -191,8 +193,10 @@ bool LButton::handleEvent( SDL_Event* e )
     return flag;
 }
 
-void LButton::render(string path,int x,int y)
+void LButton::render(string path,int x,int y,int szX,int szY)
 {
+    BUTTON_WIDTH = szX;
+    BUTTON_HEIGHT = szY;
     Texturebutton.loadFromFile(path);
     for( int i = 0; i < BUTTON_SPRITE_TOTAL; ++i )
     {
@@ -223,7 +227,7 @@ void Init()
     gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     SDL_SetRenderDrawColor( gRenderer,255,255,255,255);
-    loadImage("assets/stback.png");
+    loadImage("assets/background.png");
 }
 
 void close()
@@ -263,25 +267,30 @@ int main( int argc, char* args[] )
             }
             else if( trangthai == 1 )
             {
-                NextA.handleEvent(&e);
-                NextB.handleEvent(&e);
+                if( NextA.handleEvent(&e) || NextB.handleEvent(&e) )
+                {
+                    trangthai = 2;
+                }
             }
         }
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
         if(trangthaitruoc == 0)
         {
-            StartA.render( "assets/mainscreen/playbutton.png",500,400);
-            StartB.render( "assets/mainscreen/resumebutton.png",500,500);
-            StartC.render( "assets/mainscreen/quitbutton.png",500,600);
+            StartA.render( "assets/mainscreen/playbutton.png",500,400,350,90);
+            StartB.render( "assets/mainscreen/resumebutton.png",500,500,350,90);
+            StartC.render( "assets/mainscreen/quitbutton.png",500,600,350,90);
         }
         else if(trangthai == 1)
         {
             SDL_RenderClear(gRenderer);
             loadImage("assets/background.png");
-            NextA.render( "assets/mainscreen/easybutton.png",500,500);
-            NextB.render( "assets/mainscreen/hardbutton.png",500,600);
+            NextA.render( "assets/mainscreen/easybutton.png",500,500,350,90);
+            NextB.render( "assets/mainscreen/hardbutton.png",500,600,350,90);
         }
-
+        else if(trangthai == 2)
+        {
+            SDL_RenderClear(gRenderer);
+        }
         SDL_RenderPresent( gRenderer );
     }
     close();

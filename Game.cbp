@@ -45,8 +45,6 @@
 			<Add directory="../../../Desktop/SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/lib" />
 			<Add directory="../../../Desktop/SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="Engine.cpp" />
-		<Unit filename="Engine.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
