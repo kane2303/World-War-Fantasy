@@ -469,9 +469,25 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1710692410 source:c:\users\bogie\onedrive\documents\github\knight\main.cpp
+1710855726 source:c:\users\bogie\onedrive\documents\github\knight\main.cpp
 	<SDL.h>
 	<SDL_image.h>
-	<stdio.h>
-	<string>
+	<bits/stdc++.h>
+	"Button.h"
+	"Texture.h"
+
+1710855937 c:\users\bogie\onedrive\documents\github\knight\button.h
+	<SDL.h>
+	"Texture.h"
+
+1710855744 c:\users\bogie\onedrive\documents\github\knight\texture.h
+	<SDL.h>
+	<SDL_image.h>
+	<bits/stdc++.h>
+
+1710855984 source:c:\users\bogie\onedrive\documents\github\knight\button.cpp
+	"Button.h"
+
+1710855841 source:c:\users\bogie\onedrive\documents\github\knight\texture.cpp
+	"Texture.h"
 

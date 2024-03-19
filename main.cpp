@@ -1,71 +1,30 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include<bits/stdc++.h>
+#include"Button.h"
+#include"Texture.h"
 using namespace std;
+const int MAIN_WIDTH = 3200;
+const int MAIN_HEIGHT = 720;
+
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int TOTAL_BUTTONS = 4;
 
-enum LButtonSprite
-{
-    BUTTON_SPRITE_MOUSE_OUT = 0,
-    BUTTON_SPRITE_MOUSE_OVER_MOTION = 1,
-    BUTTON_SPRITE_MOUSE_DOWN = 2,
-    BUTTON_SPRITE_MOUSE_UP = 3,
-    BUTTON_SPRITE_TOTAL = 4
-};
 
-class LTexture
-{
-public:
-
-    LTexture();
-    ~LTexture();
-
-
-    bool loadFromFile( string path );
-
-    void free();
-
-    void render( int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
-
-
-    int getWidth();
-    int getHeight();
-
-private:
-
-    SDL_Texture* mTexture;
-
-    int mWidth;
-    int mHeight;
-};
-
-class LButton
-{
-public:
-    LButton();
-
-    bool handleEvent( SDL_Event* e );
-
-    void render(string path,int x,int y,int szX,int szY);
-
-private:
-    //vi tri cua nut
-    SDL_Point mPosition;
-
-    //trang thai nut hien tai
-    LButtonSprite mCurrentSprite;
-
-    //size cua nut
-    int BUTTON_WIDTH,BUTTON_HEIGHT;
-};
+SDL_Rect base;
 //anh cua nut
 LTexture Texturebutton;
+//bg
+LTexture Texturebackground1,Texturebackground2;
+//texture cua dot
+LTexture gDotTexture;
+//Texture cua vat
+LTexture gBootcamp;
 
 bool init();
 
-bool loadMedia();
+void loadMedia();
 
 void close();
 
@@ -76,23 +35,12 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 
-SDL_Rect gSpriteClips[ BUTTON_SPRITE_TOTAL ];
-
-
 LButton StartA,StartB,StartC;
+LTexture TextStA,TextStB,TextStC;
+
 LButton NextA,NextB;
+LTexture TextNxtA,TextNxtB;
 
-LTexture::LTexture()
-{
-    mTexture = NULL;
-    mWidth = 0;
-    mHeight = 0;
-}
-
-LTexture::~LTexture()
-{
-    free();
-}
 
 bool LTexture::loadFromFile( std::string path )
 {
@@ -101,7 +49,7 @@ bool LTexture::loadFromFile( std::string path )
     SDL_Texture* newTexture = NULL;
 
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0, 0 ) );
 
     newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
     mWidth = loadedSurface->w;
@@ -109,16 +57,6 @@ bool LTexture::loadFromFile( std::string path )
 
     mTexture = newTexture;
     return mTexture != NULL;
-}
-void LTexture::free()
-{
-    if( mTexture != NULL )
-    {
-        SDL_DestroyTexture( mTexture );
-        mTexture = NULL;
-        mWidth = 0;
-        mHeight = 0;
-    }
 }
 
 void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
@@ -133,91 +71,6 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
     SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
 }
 
-int LTexture::getWidth()
-{
-    return mWidth;
-}
-
-int LTexture::getHeight()
-{
-    return mHeight;
-}
-
-LButton::LButton()
-{
-    mPosition.x = 0;
-    mPosition.y = 0;
-    BUTTON_WIDTH = 0;
-    BUTTON_HEIGHT = 0;
-
-    mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
-}
-
-
-bool LButton::handleEvent( SDL_Event* e )
-{
-    bool flag=0;
-    if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
-    {
-        int x, y;
-        SDL_GetMouseState( &x, &y );
-
-        bool inside = ( x >= mPosition.x && x <= mPosition.x + BUTTON_WIDTH && y >= mPosition.y && y <= mPosition.y + BUTTON_HEIGHT);
-
-        if( !inside )
-        {
-            mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
-        }
-        else
-        {
-            switch( e->type )
-            {
-            case SDL_MOUSEMOTION:
-                mCurrentSprite = BUTTON_SPRITE_MOUSE_OVER_MOTION;
-                break;
-
-            case SDL_MOUSEBUTTONDOWN:
-                mCurrentSprite = BUTTON_SPRITE_MOUSE_DOWN;
-                flag=1;
-                break;
-
-            case SDL_MOUSEBUTTONUP:
-                mCurrentSprite = BUTTON_SPRITE_MOUSE_UP;
-                break;
-            }
-        }
-    }
-    return flag;
-}
-
-void LButton::render(string path,int x,int y,int szX,int szY)
-{
-    BUTTON_WIDTH = szX;
-    BUTTON_HEIGHT = szY;
-    Texturebutton.loadFromFile(path);
-    for( int i = 0; i < BUTTON_SPRITE_TOTAL; ++i )
-    {
-        gSpriteClips[ i ].x = 0;
-        gSpriteClips[ i ].y = i * 90;
-        gSpriteClips[ i ].w = BUTTON_WIDTH;
-        gSpriteClips[ i ].h = BUTTON_HEIGHT;
-    }
-    mPosition.x = x;
-    mPosition.y = y;
-    Texturebutton.render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
-}
-
-void loadImage(string path,int pX=0,int pY=0,int szX=SCREEN_WIDTH,int szY=SCREEN_HEIGHT)
-{
-    SDL_Texture* newTexture = NULL;
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
-    newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-    SDL_Rect renderQuad = { pX, pY, szX, szY };
-    SDL_RenderCopy(gRenderer,newTexture,NULL,&renderQuad);
-    SDL_DestroyTexture(newTexture);
-    newTexture=NULL;
-}
 void Init()
 {
     bool success = true;
@@ -225,7 +78,21 @@ void Init()
     gWindow = SDL_CreateWindow( "Knight", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     SDL_SetRenderDrawColor( gRenderer,255,255,255,255);
-    loadImage("assets/background.png");
+}
+void loadMedia()
+{
+    Texturebackground1.loadFromFile("assets/background.jpg");
+    TextStA.loadFromFile("assets/mainscreen/playbutton.png");
+    TextStB.loadFromFile("assets/mainscreen/resumebutton.png");
+    TextStC.loadFromFile("assets/mainscreen/quitbutton.png");
+
+    TextNxtA.loadFromFile("assets/mainscreen/easybutton.png");
+    TextNxtB.loadFromFile("assets/mainscreen/hardbutton.png");
+
+    Texturebackground2.loadFromFile("assets/bg.png");
+    base = {0,680,SCREEN_WIDTH,40};
+    gDotTexture.loadFromFile("assets/dot.png");
+    gBootcamp.loadFromFile("assets/castle.png");
 }
 
 void close()
@@ -242,11 +109,48 @@ void close()
 }
 
 int trangthai=0;
+Dot dot;
+SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
+void Dot::move()
+{
+    mPosX += mVelX;
+
+    if( ( mPosX < 0 ) || ( mPosX + DOT_WIDTH > MAIN_WIDTH ) )
+    {
+        mPosX -= mVelX;
+    }
+
+    mPosY += mVelY;
+
+    if( ( mPosY < 0 ) || ( mPosY + DOT_HEIGHT > MAIN_HEIGHT ) )
+    {
+        mPosY -= mVelY;
+    }
+}
+
+void Dot::render( int camX, int camY )
+{
+    gDotTexture.render( mPosX - camX, mPosY - camY );
+}
+void Run_dot()
+{
+    dot.move();
+    camera.x = ( dot.getPosX() + Dot::DOT_WIDTH / 2 ) - SCREEN_WIDTH / 2;
+    camera.y = ( dot.getPosY() + Dot::DOT_HEIGHT / 2 ) - SCREEN_HEIGHT / 2;
+    if( camera.x < 0 ) camera.x = 0;
+    if( camera.y < 0 ) camera.y = 0;
+    if( camera.x > MAIN_WIDTH - camera.w ) camera.x = MAIN_WIDTH - camera.w;
+    if( camera.y > MAIN_HEIGHT - camera.h ) camera.y = MAIN_HEIGHT - camera.h;
+    Texturebackground2.render( 0, 0, &camera );
+    dot.render( camera.x, camera.y );
+}
+
 int main( int argc, char* args[] )
 {
     Init();
+    loadMedia();
     bool quit = false;
-
     SDL_Event e;
     while( !quit )
     {
@@ -270,27 +174,48 @@ int main( int argc, char* args[] )
                     trangthai = 2;
                 }
             }
+            else if( trangthai == 2 )
+            {
+                dot.handleEvent(e);
+            }
         }
-        SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        SDL_SetRenderDrawColor( gRenderer, 54, 104, 168, 255 );
         if(trangthaitruoc == 0)
         {
-            StartA.render( "assets/mainscreen/playbutton.png",500,400,350,90);
-            StartB.render( "assets/mainscreen/resumebutton.png",500,500,350,90);
-            StartC.render( "assets/mainscreen/quitbutton.png",500,600,350,90);
+            Texturebackground1.render(0,0);
+            StartA.render( &TextStA,490,200,375,90,90);
+            StartB.render( &TextStB,490,300,375,90,90);
+            StartC.render( &TextStC,490,400,375,90,90);
         }
         else if(trangthai == 1)
         {
-            SDL_RenderClear(gRenderer);
-            loadImage("assets/background.png");
-            NextA.render( "assets/mainscreen/easybutton.png",500,500,350,90);
-            NextB.render( "assets/mainscreen/hardbutton.png",500,600,350,90);
+            Texturebackground1.render(0,0);
+            NextA.render( &TextNxtA,490,200,375,90,90);
+            NextB.render( &TextNxtB,490,300,375,90,90);
         }
         else if(trangthai == 2)
         {
-            SDL_RenderClear(gRenderer);
+            Run_dot();
+            SDL_RenderFillRect(gRenderer,&base);
+            gBootcamp.render(5,480);
 
         }
         SDL_RenderPresent( gRenderer );
+        SDL_RenderClear(gRenderer);
+
+        if(trangthai!=trangthaitruoc)
+        {
+            if(trangthai==1) {
+                TextStA.free();
+                TextStB.free();
+                TextStC.free();
+            }
+            else if(trangthai==2){
+                Texturebackground1.free();
+                TextNxtA.free();
+                TextNxtB.free();
+            }
+        }
     }
     close();
 
