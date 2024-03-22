@@ -2,14 +2,11 @@
 #include <SDL_image.h>
 #include<bits/stdc++.h>
 #include"Button.h"
-#include"Texture.h"
+#include"TextureMange.h"
+#include"Engine.h"
+#include"Troops.h"
+#define gRenderer  Engine::GetInstance()->GetRenderer()
 using namespace std;
-const int MAIN_WIDTH = 3200;
-const int MAIN_HEIGHT = 720;
-
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 720;
-const int TOTAL_BUTTONS = 4;
 
 
 SDL_Rect base;
@@ -17,23 +14,10 @@ SDL_Rect base;
 LTexture Texturebutton;
 //bg
 LTexture Texturebackground1,Texturebackground2;
-//texture cua dot
-LTexture gDotTexture;
 //Texture cua vat
-LTexture gBootcamp;
-
-bool init();
+LTexture gBootcamp,gBootcamp2,BG2,BGframe;
 
 void loadMedia();
-
-void close();
-
-
-SDL_Window* gWindow = NULL;
-
-
-SDL_Renderer* gRenderer = NULL;
-
 
 LButton StartA,StartB,StartC;
 LTexture TextStA,TextStB,TextStC;
@@ -41,46 +25,16 @@ LTexture TextStA,TextStB,TextStC;
 LButton NextA,NextB;
 LTexture TextNxtA,TextNxtB;
 
+LButton TroopsIcon1,TroopsIcon2,TroopsIcon3;
+LTexture TextTroopsIcon1,TextTroopsIcon2,TextTroopsIcon3;
 
-bool LTexture::loadFromFile( std::string path )
-{
-    free();
+int trangthai=0;
+SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-    SDL_Texture* newTexture = NULL;
-
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0, 0 ) );
-
-    newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-    mWidth = loadedSurface->w;
-    mHeight = loadedSurface->h;
-
-    mTexture = newTexture;
-    return mTexture != NULL;
-}
-
-void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
-{
-    SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-    if( clip != NULL )
-    {
-        renderQuad.w = clip->w;
-        renderQuad.h = clip->h;
-    }
-
-    SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
-}
-
-void Init()
-{
-    bool success = true;
-    SDL_Init( SDL_INIT_VIDEO );
-    gWindow = SDL_CreateWindow( "Knight", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-    gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-    SDL_SetRenderDrawColor( gRenderer,255,255,255,255);
-}
+Dot dot;
 void loadMedia()
 {
+    Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
     TextStA.loadFromFile("assets/mainscreen/playbutton.png");
     TextStB.loadFromFile("assets/mainscreen/resumebutton.png");
@@ -89,49 +43,14 @@ void loadMedia()
     TextNxtA.loadFromFile("assets/mainscreen/easybutton.png");
     TextNxtB.loadFromFile("assets/mainscreen/hardbutton.png");
 
-    Texturebackground2.loadFromFile("assets/bg.png");
+    BG2.loadFromFile("assets/bg.png");
     base = {0,680,SCREEN_WIDTH,40};
-    gDotTexture.loadFromFile("assets/dot.png");
     gBootcamp.loadFromFile("assets/castle.png");
-}
-
-void close()
-{
-    Texturebutton.free();
-
-    SDL_DestroyRenderer( gRenderer );
-    SDL_DestroyWindow( gWindow );
-    gWindow = NULL;
-    gRenderer = NULL;
-
-    IMG_Quit();
-    SDL_Quit();
-}
-
-int trangthai=0;
-Dot dot;
-SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-
-void Dot::move()
-{
-    mPosX += mVelX;
-
-    if( ( mPosX < 0 ) || ( mPosX + DOT_WIDTH > MAIN_WIDTH ) )
-    {
-        mPosX -= mVelX;
-    }
-
-    mPosY += mVelY;
-
-    if( ( mPosY < 0 ) || ( mPosY + DOT_HEIGHT > MAIN_HEIGHT ) )
-    {
-        mPosY -= mVelY;
-    }
-}
-
-void Dot::render( int camX, int camY )
-{
-    gDotTexture.render( mPosX - camX, mPosY - camY );
+    gBootcamp2.loadFromFile("assets/castle.png");
+    BGframe.loadFromFile("assets/BGframe.png");
+    TextTroopsIcon1.loadFromFile("assets/troopsicon1.png");
+    TextTroopsIcon2.loadFromFile("assets/troopsicon2.png");
+    TextTroopsIcon3.loadFromFile("assets/troopsicon3.png");
 }
 void Run_dot()
 {
@@ -142,19 +61,24 @@ void Run_dot()
     if( camera.y < 0 ) camera.y = 0;
     if( camera.x > MAIN_WIDTH - camera.w ) camera.x = MAIN_WIDTH - camera.w;
     if( camera.y > MAIN_HEIGHT - camera.h ) camera.y = MAIN_HEIGHT - camera.h;
-    Texturebackground2.render( 0, 0, &camera );
-    dot.render( camera.x, camera.y );
 }
+/**                                                                              start merge                                      **/
+/**                                                                              start merge                                      **/
+/**                                                                              start merge                                      **/
 
-int main( int argc, char* args[] )
+/**                                                                              end merge                                      **/
+/**                                                                              end merge                                      **/
+/**                                                                              end merge                                      **/
+int main(int argc,char** argv )
 {
-    Init();
+    Engine::GetInstance()->Init();
     loadMedia();
     bool quit = false;
     SDL_Event e;
     while( !quit )
     {
         int trangthaitruoc = trangthai;
+        int calling=0;
         while( SDL_PollEvent( &e ) != 0 )
         {
             if( e.type == SDL_QUIT )
@@ -177,6 +101,9 @@ int main( int argc, char* args[] )
             else if( trangthai == 2 )
             {
                 dot.handleEvent(e);
+                if(TroopsIcon1.handleEvent(&e)) calling = 1;
+                if(TroopsIcon2.handleEvent(&e)) calling = 2;
+                if(TroopsIcon3.handleEvent(&e)) calling = 3;
             }
         }
         SDL_SetRenderDrawColor( gRenderer, 54, 104, 168, 255 );
@@ -196,28 +123,45 @@ int main( int argc, char* args[] )
         else if(trangthai == 2)
         {
             Run_dot();
-            SDL_RenderFillRect(gRenderer,&base);
+            Texturebackground2.SetRender();
+            SDL_RenderClear(gRenderer);
+            //mat trong
+
+            BG2.render(0,0);
             gBootcamp.render(5,480);
+            SDL_Rect tmp{0,0,200,200};
+            gBootcamp2.render(MAIN_WIDTH-205,480,&tmp,1);
 
+            SDL_SetRenderTarget(gRenderer,nullptr);
+            SDL_RenderClear(gRenderer);
+            Texturebackground2.render(0,0,&camera);
+            // chay theo cam
+            SDL_SetRenderDrawColor( gRenderer, 54, 104, 168, 255 );
+            SDL_RenderFillRect(gRenderer,&base);
+            BGframe.render(970,0);
+            TroopsIcon1.render( &TextTroopsIcon1,1018,32,54,54,54);
+            TroopsIcon2.render( &TextTroopsIcon2,1098,32,54,54,54);
+            TroopsIcon3.render( &TextTroopsIcon3,1178,32,54,54,54);
         }
-        SDL_RenderPresent( gRenderer );
+        Engine::GetInstance()->Render();
         SDL_RenderClear(gRenderer);
-
         if(trangthai!=trangthaitruoc)
         {
-            if(trangthai==1) {
+            if(trangthai==1)
+            {
                 TextStA.free();
                 TextStB.free();
                 TextStC.free();
             }
-            else if(trangthai==2){
+            else if(trangthai==2)
+            {
                 Texturebackground1.free();
                 TextNxtA.free();
                 TextNxtB.free();
             }
         }
     }
-    close();
+    Engine::GetInstance()->Quit();
 
     return 0;
 }

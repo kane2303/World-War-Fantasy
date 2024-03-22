@@ -113,3 +113,21 @@ int Dot::getPosY()
 {
     return mPosY;
 }
+
+void Dot::move()
+{
+    mPosX += mVelX;
+
+    if( ( mPosX < 0 ) || ( mPosX + DOT_WIDTH > 3200 ) )
+    {
+        mPosX -= mVelX;
+    }
+
+    mPosY += mVelY;
+
+    if( ( mPosY < 0 ) || ( mPosY + DOT_HEIGHT > 720 ) )
+    {
+        mPosY -= mVelY;
+    }
+}
+

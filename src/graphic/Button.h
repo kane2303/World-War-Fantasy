@@ -1,7 +1,10 @@
 #ifndef BUTTON_H
 #define BUTTON_H
+
 #include<SDL.h>
-#include"Texture.h"
+#include"TextureMange.h"
+#include"Engine.h"
+#define gRenderer  Engine::GetInstance()->GetRenderer()
 
 enum LButtonSprite
 {
@@ -32,7 +35,6 @@ public:
     Dot();
     void handleEvent( SDL_Event& e );
     void move();
-    void render( int camX, int camY );
     int getPosX();
     int getPosY();
 private:
