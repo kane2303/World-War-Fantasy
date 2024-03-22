@@ -1,0 +1,212 @@
+int binhchungs[]={-1,   1,    2,    3,    1,    2,    3  };
+int HPs[] =      {-1,   150,  100,  50,   200,  200,  200};
+int dames[] =    {-1,   34,   20,   250,  50,   40,   50 };
+int SPDatks[] =  {-1,   24,   24,   24,   24,   24,   24 };
+int ranges[] =   {-1,   5,    350,  5,    5,    350,  5 };
+int SPDs[] =     {-1,   1,    1,    2,    1,    1,    1  };
+
+
+struct Troop{
+    LTexture Textt;
+    int stt;
+    int l, r;
+    int id;
+    int phe;
+    int binhchung;
+    int HP;
+    int dame;
+    int SPDatk;
+    int range;
+    int SPD;
+    int deadframe;
+
+    Troop(){}
+
+    Troop(int idd, int thutu, int phee) {
+        stt=thutu;
+        if(!phee) {l=0, r=96;}
+        else {r=1200, l=r-96;}
+        Textt.xx=l;
+        id=idd;
+        phe=phee;
+        binhchung = binhchungs[idd];
+        HP = HPs[idd];
+        dame = dames[idd];
+        SPDatk = SPDatks[idd];
+        range = ranges[idd];
+        if(!phee) SPD = SPDs[idd];
+        else SPD = -SPDs[idd];
+        deadframe=0;
+    }
+};
+
+vector<Troop> danhsachquan;
+
+bool CreateTroop(int id, int phe, bool hard=false) { //nếu là tạo lính cho phe player thì chỉ cần nhập 2 tham số đầu vào do hard mặc định bằng false
+    if(phe && cntlinhbot>=8) return false;
+    if(!phe && cntlinhplayer>=8) return false;
+
+    Troop linh(id, ++cntlinh, phe);
+
+    if(phe && hard) linh.HP += linh.HP/2;
+    if(!phe) binhchungplayer.push(binhchungs[id]);
+
+    danhsachquan.push_back(linh);
+    if(phe) cntlinhbot++;
+    else cntlinhplayer++;
+
+
+    return true;
+}
+
+void ClearTroop(int thutu) {
+    for(int i=0; i<danhsachquan.size(); i++)
+        if(danhsachquan[i].stt == thutu) {
+            if(danhsachquan[i].phe) cntlinhbot--;
+            else {
+                binhchungplayer.pop();
+                cntlinhplayer--;
+            }
+
+            danhsachquan.erase( danhsachquan.begin()+i );
+            break;
+        }
+}
+
+void tancong(Troop &attacker, Troop &defender) {
+    int satthuong=attacker.dame;
+    if(attacker.binhchung == 1 && defender.binhchung == 2) satthuong*=2;
+    if(attacker.binhchung == 2 && defender.binhchung == 3) satthuong*=2;
+    if(attacker.binhchung == 3 && defender.binhchung == 1) satthuong*=2;
+    if(attacker.id == 2 && defender.id == 3) satthuong= satthuong/2*3;
+
+    defender.HP -= satthuong;
+}
+
+void Work(Troop &doituong) {
+    bool EnemyInRange=false;
+    for(int i=0; i<danhsachquan.size(); i++) {
+        if(danhsachquan[i].phe == doituong.phe) continue;
+        if( ((abs(doituong.r - danhsachquan[i].l) <= doituong.range) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= doituong.range ) && doituong.phe) ) {
+            EnemyInRange=true;
+            break;
+        }
+    }
+
+    bool AllyInFrontOfArcher=false;
+    for(int i=0; i<danhsachquan.size(); i++) {
+        if(danhsachquan[i].phe != doituong.phe) continue;
+        if(danhsachquan[i].stt == doituong.stt) continue;
+        if( ( doituong.r < danhsachquan[i].l && !doituong.phe )  ||  (danhsachquan[i].r < doituong.l && doituong.phe) ) {
+            AllyInFrontOfArcher=true;
+            break;
+        }
+    }
+
+    int khoangcachcho=5;
+    if(doituong.id==3) khoangcachcho=0;
+    int deltax=doituong.SPD;
+
+    bool CanMove=true;
+    for(int i=0; i<danhsachquan.size(); i++) {
+        if(danhsachquan[i].stt == doituong.stt) continue;
+        if(doituong.phe==danhsachquan[i].phe)  khoangcachcho=5;
+        if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt)
+            if( max(danhsachquan[i].l, doituong.l) <= min(danhsachquan[i].r, doituong.r) ) CanMove=false;
+        if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
+            CanMove=false;
+            break;
+        }
+        //xử lý khử trường hợp cà giật cà giật của cá
+        if(doituong.id==3 && doituong.phe==danhsachquan[i].phe && doituong.stt>danhsachquan[i].stt && !doituong.phe)
+            if(danhsachquan[i].l-doituong.r == 7) deltax=1;
+        if(doituong.id==3 && doituong.phe==danhsachquan[i].phe && doituong.stt>danhsachquan[i].stt && doituong.phe)
+            if(doituong.l-danhsachquan[i].r == 7) deltax=1;
+    }
+
+
+    if(doituong.HP <= 0) { //kiểm tra xem có ở ngưỡng máu tử hay không
+        if(doituong.deadframe<=6*delays) { //gọi từ 0 -> được 6*delays lần từ 0-47, khi ở 47 thì đã có cộng luôn lên 6*delays để erase đối tượng
+            LoadSprite(doituong.Textt, taolink(doituong.id, "Death"), doituong.deadframe, delays, 0, doituong.phe);
+            doituong.deadframe++;
+            if(doituong.deadframe==6*delays) ClearTroop(doituong.stt);
+        }
+    }
+    else {
+        if(EnemyInRange) {
+            if(doituong.id==3) { //TH đặc biệt -> không theo chu trình tấn công và tấn công xong cũng die luôn
+                LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), doituong.deadframe, delays, 0, doituong.phe); //vì con cá nổ xong cũng đi luôn -> dùng sài tạm biến deadframe thay biến attackframe
+                if(doituong.deadframe==3*delays) {
+                    for(int i=0; i<danhsachquan.size(); i++) {
+                        if(danhsachquan[i].phe == doituong.phe) continue;
+                        if(abs(danhsachquan[i].r - doituong.l) <= doituong.range  ||  abs(danhsachquan[i].l - doituong.r) <= doituong.range) {
+                            tancong(doituong, danhsachquan[i]);
+                            break;
+                        }
+                    }
+                }
+                doituong.deadframe++;
+                if(doituong.deadframe==6*delays) ClearTroop(doituong.stt);
+            }
+            else if(frame%(18*delays)<(6*delays)) { //trong chu trình tấn công -> chạy hoạt ảnh tấn công, tấn công và di chuyển nếu có thể
+                if(doituong.id==5 && AllyInFrontOfArcher) LoadSprite(doituong.Textt, taolink(doituong.id, "Attack2"), frame, delays, 0, doituong.phe);
+                else LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), frame, delays, 0, doituong.phe);
+
+                if( frame%(18*delays)== (6*delays-1) ) {
+                    //xác định kẻ địch gần nhất
+                    int mn=1000, sttdich=0;
+                    for(int i=0; i<danhsachquan.size(); i++) {
+                        if(danhsachquan[i].phe == doituong.phe) continue;
+                        if( abs(doituong.r - danhsachquan[i].l) <= doituong.range  &&  !doituong.phe  &&  abs(doituong.r - danhsachquan[i].l) < mn ) {
+                            mn = abs(doituong.r - danhsachquan[i].l);
+                            sttdich=i;
+                        }
+                        if( abs(danhsachquan[i].r - doituong.l) <= doituong.range  &&  doituong.phe  &&  abs(danhsachquan[i].r - doituong.l) < mn ) {
+                            mn =  abs(danhsachquan[i].r - doituong.l);
+                            sttdich=i;
+                        }
+                    }
+                    tancong(doituong, danhsachquan[sttdich]);
+                }
+
+            }
+            else { //không trong đợt tấn công -> tiến tiếp hoặc đứng yên đợi
+                if(CanMove) {
+                    LoadSprite(doituong.Textt, taolink(doituong.id, "Walk"), frame, delays, 0, doituong.phe);
+                    doituong.Textt.xx += deltax;
+                    doituong.l += deltax;
+                    doituong.r += deltax;
+                }
+                else LoadSprite(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+            }
+
+        }
+        else if(CanMove) {
+            LoadSprite(doituong.Textt, taolink(doituong.id, "Walk"), frame, delays, 0, doituong.phe);
+            doituong.Textt.xx += deltax;
+            doituong.l += deltax;
+            doituong.r += deltax;
+        }
+        else LoadSprite(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+    }
+}
+
+bool AImove(bool hard, int DoiNha){
+    int timesummon=400;
+    if(hard) timesummon=300;
+
+    int l, r;
+    if(DoiNha==2) l=1, r=3;
+    else l=4, r=6;
+
+    int id=Rand(l, r);
+    if(hard && Rand(1, 2)==1 && !binhchungplayer.empty()) {
+        id=1;
+        if(DoiNha==3) id=4;
+
+        if(binhchungplayer.front()==1) id+=2;
+        if(binhchungplayer.front()==3) id++;
+    }
+
+    if(frame%timesummon==0) CreateTroop( id, 1, hard );
+}
