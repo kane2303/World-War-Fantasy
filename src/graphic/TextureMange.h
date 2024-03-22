@@ -22,6 +22,7 @@ public:
     int getHeight();
     void SetRender();
     void SetTexture();
+    void setAlpha( Uint8 alpha );
 private:
     SDL_Texture* mTexture;
     int mWidth;

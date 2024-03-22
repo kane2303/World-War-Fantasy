@@ -16,6 +16,9 @@
 					<Add directory="./" />
 					<Add directory="src" />
 					<Add directory="core" />
+					<Add directory="src/graphic" />
+					<Add directory="src/Core" />
+					<Add directory="src/Characters" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -28,6 +31,9 @@
 					<Add directory="./" />
 					<Add directory="src" />
 					<Add directory="core" />
+					<Add directory="src/graphic" />
+					<Add directory="src/Core" />
+					<Add directory="src/Characters" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,11 +51,15 @@
 			<Add directory="../../../Desktop/SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/lib" />
 			<Add directory="../../../Desktop/SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="Button.cpp" />
-		<Unit filename="Button.h" />
-		<Unit filename="Texture.cpp" />
-		<Unit filename="Texture.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Characters/Troops.cpp" />
+		<Unit filename="src/Characters/Troops.h" />
+		<Unit filename="src/Core/Engine.cpp" />
+		<Unit filename="src/Core/Engine.h" />
+		<Unit filename="src/graphic/Button.cpp" />
+		<Unit filename="src/graphic/Button.h" />
+		<Unit filename="src/graphic/TextureMange.cpp" />
+		<Unit filename="src/graphic/TextureMange.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

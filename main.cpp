@@ -15,7 +15,9 @@ LTexture Texturebutton;
 //bg
 LTexture Texturebackground1,Texturebackground2;
 //Texture cua vat
-LTexture gBootcamp,gBootcamp2,BG2,BGframe;
+LTexture gBootcamp,gBootcamp2,BG2,BG3,BGframe;
+
+LTexture TextChange;
 
 void loadMedia();
 
@@ -51,6 +53,9 @@ void loadMedia()
     TextTroopsIcon1.loadFromFile("assets/troopsicon1.png");
     TextTroopsIcon2.loadFromFile("assets/troopsicon2.png");
     TextTroopsIcon3.loadFromFile("assets/troopsicon3.png");
+    TextChange.loadFromFile("assets/chuyencanh.png");
+
+    BG3.loadFromFile("assets/background2.jpg");
 }
 void Run_dot()
 {
@@ -69,6 +74,7 @@ void Run_dot()
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
+int dengiolendoi=0,alpha=0;
 int main(int argc,char** argv )
 {
     Engine::GetInstance()->Init();
@@ -100,13 +106,13 @@ int main(int argc,char** argv )
             }
             else if( trangthai == 2 )
             {
-                dot.handleEvent(e);
-                if(TroopsIcon1.handleEvent(&e)) calling = 1;
-                if(TroopsIcon2.handleEvent(&e)) calling = 2;
-                if(TroopsIcon3.handleEvent(&e)) calling = 3;
+//                dot.handleEvent(e);
+//                if(TroopsIcon1.handleEvent(&e)) calling = 1;
+//                if(TroopsIcon2.handleEvent(&e)) calling = 2;
+//                if(TroopsIcon3.handleEvent(&e)) calling = 3;
             }
         }
-        SDL_SetRenderDrawColor( gRenderer, 54, 104, 168, 255 );
+//        SDL_SetRenderDrawColor( gRenderer, 54, 104, 168, 255 );
         if(trangthaitruoc == 0)
         {
             Texturebackground1.render(0,0);
@@ -114,14 +120,15 @@ int main(int argc,char** argv )
             StartB.render( &TextStB,490,300,375,90,90);
             StartC.render( &TextStC,490,400,375,90,90);
         }
-        else if(trangthai == 1)
+        if(trangthai == 1)
         {
             Texturebackground1.render(0,0);
             NextA.render( &TextNxtA,490,200,375,90,90);
             NextB.render( &TextNxtB,490,300,375,90,90);
         }
-        else if(trangthai == 2)
+        if(trangthai == 2)
         {
+            SDL_RenderClear(gRenderer);
             Run_dot();
             Texturebackground2.SetRender();
             SDL_RenderClear(gRenderer);
@@ -131,6 +138,7 @@ int main(int argc,char** argv )
             gBootcamp.render(5,480);
             SDL_Rect tmp{0,0,200,200};
             gBootcamp2.render(MAIN_WIDTH-205,480,&tmp,1);
+
 
             SDL_SetRenderTarget(gRenderer,nullptr);
             SDL_RenderClear(gRenderer);
@@ -142,6 +150,23 @@ int main(int argc,char** argv )
             TroopsIcon1.render( &TextTroopsIcon1,1018,32,54,54,54);
             TroopsIcon2.render( &TextTroopsIcon2,1098,32,54,54,54);
             TroopsIcon3.render( &TextTroopsIcon3,1178,32,54,54,54);
+            dengiolendoi++;
+
+            if(dengiolendoi>=50)
+            {
+                if(alpha==254) {
+                    alpha=255;
+                    trangthai=3;
+                }
+                else alpha++;
+                TextChange.setAlpha(alpha);
+                TextChange.render(0,0);
+            }
+
+        }
+        if(trangthai==3)
+        {
+            BG3.render(0,0);
         }
         Engine::GetInstance()->Render();
         SDL_RenderClear(gRenderer);
