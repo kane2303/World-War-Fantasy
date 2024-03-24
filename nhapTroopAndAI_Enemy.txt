@@ -1,10 +1,11 @@
-int binhchungs[]={-1,   1,    2,    3,    1,    2,    3  };
-int HPs[] =      {-1,   150,  100,  50,   200,  200,  200};
-int dames[] =    {-1,   34,   20,   250,  50,   40,   50 };
-int SPDatks[] =  {-1,   24,   24,   24,   24,   24,   24 };
-int ranges[] =   {-1,   5,    350,  5,    5,    350,  5 };
-int SPDs[] =     {-1,   1,    1,    2,    1,    1,    1  };
-
+int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4};
+int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000};
+int dames[] =      {-1,   34,   20,   250,  50,   40,   50,   300};
+int SPDatks[] =    {-1,   24,   24,   24,   24,   24,   24,   24};
+int ranges[] =     {-1,   5,    350,  5,    5,    350,  5,    5};
+int SPDs[] =       {-1,   1,    1,    2,    1,    1,    1,    2};
+int costs[]=       {-1,   60,   55,   50,   100,  110,  120,  1500};
+int killrewards[]= {-1,   75,   70,   65,   135,  145,  155,  2000};
 
 struct Troop{
     LTexture Textt;
@@ -19,13 +20,18 @@ struct Troop{
     int range;
     int SPD;
     int deadframe;
+    int attackframe;
+    int cooldownframe;
+    int cost;
+    int killreward;
 
     Troop(){}
 
     Troop(int idd, int thutu, int phee) {
         stt=thutu;
-        if(!phee) {l=0, r=96;}
+        if(!phee) {l=0, r=l+96;}
         else {r=1200, l=r-96;}
+        if(idd==7) {r=l+160;}
         Textt.xx=l;
         id=idd;
         phe=phee;
@@ -37,6 +43,10 @@ struct Troop{
         if(!phee) SPD = SPDs[idd];
         else SPD = -SPDs[idd];
         deadframe=0;
+        attackframe=0;
+        cooldownframe=0;
+        cost=costs[idd];
+        killreward=killrewards[idd];
     }
 };
 
@@ -45,16 +55,17 @@ vector<Troop> danhsachquan;
 bool CreateTroop(int id, int phe, bool hard=false) { //nếu là tạo lính cho phe player thì chỉ cần nhập 2 tham số đầu vào do hard mặc định bằng false
     if(phe && cntlinhbot>=8) return false;
     if(!phe && cntlinhplayer>=8) return false;
+    if(!phe && playergold<costs[id]) return false;
 
     Troop linh(id, ++cntlinh, phe);
-
     if(phe && hard) linh.HP += linh.HP/2;
-    if(!phe) binhchungplayer.push(binhchungs[id]);
+    if(phe && hard) linh.killreward -= 10;
+    if(!phe) playergold -= linh.cost;
 
     danhsachquan.push_back(linh);
+    if(!phe) binhchungplayer.push(binhchungs[id]);
     if(phe) cntlinhbot++;
     else cntlinhplayer++;
-
 
     return true;
 }
@@ -62,7 +73,10 @@ bool CreateTroop(int id, int phe, bool hard=false) { //nếu là tạo lính cho
 void ClearTroop(int thutu) {
     for(int i=0; i<danhsachquan.size(); i++)
         if(danhsachquan[i].stt == thutu) {
-            if(danhsachquan[i].phe) cntlinhbot--;
+            if(danhsachquan[i].phe) {
+                cntlinhbot--;
+                playergold+=danhsachquan[i].killreward;
+            }
             else {
                 binhchungplayer.pop();
                 cntlinhplayer--;
@@ -71,6 +85,41 @@ void ClearTroop(int thutu) {
             danhsachquan.erase( danhsachquan.begin()+i );
             break;
         }
+}
+
+void LoadSprite(LTexture &Textt, string path, int frame, int timedelay, int numsheets, bool flip) {
+    if(path != "-1" && !Textt.loadFromFile(path.c_str())) {
+        cout<<"Khong mo duoc link sau: "<<path<<"\n";
+        exit(0);
+    }
+
+    int xsum=Textt.getWidth();
+    int ysum=Textt.getHeight();
+
+    if(numsheets == 0) { //nếu không phải objectile thì đầu vào là 0
+        numsheets = xsum/ysum;
+    }
+
+    SDL_Rect KichThuoc[numsheets+1];
+    for(int i=0; i<numsheets; i++) {
+        KichThuoc[i].x= i*(xsum/numsheets);
+        KichThuoc[i].y= 0;
+        KichThuoc[i].w= xsum/numsheets;
+        KichThuoc[i].h= ysum;
+    }
+
+    SDL_Rect* currentClip = &KichThuoc[ (frame / timedelay)%numsheets ];
+    Textt.render( Textt.xx , 0, currentClip, flip );
+}
+
+string taolink(int id, string thaotac) {
+    string res="TroopSprite/";
+    char c='0'+id;
+    res+=c;
+    res+='/';
+    res+=thaotac;
+    res+=".png";
+    return res;
 }
 
 void tancong(Troop &attacker, Troop &defender) {
@@ -117,11 +166,6 @@ void Work(Troop &doituong) {
             CanMove=false;
             break;
         }
-        //xử lý khử trường hợp cà giật cà giật của cá
-        if(doituong.id==3 && doituong.phe==danhsachquan[i].phe && doituong.stt>danhsachquan[i].stt && !doituong.phe)
-            if(danhsachquan[i].l-doituong.r == 7) deltax=1;
-        if(doituong.id==3 && doituong.phe==danhsachquan[i].phe && doituong.stt>danhsachquan[i].stt && doituong.phe)
-            if(doituong.l-danhsachquan[i].r == 7) deltax=1;
     }
 
 
@@ -134,7 +178,8 @@ void Work(Troop &doituong) {
     }
     else {
         if(EnemyInRange) {
-            if(doituong.id==3) { //TH đặc biệt -> không theo chu trình tấn công và tấn công xong cũng die luôn
+            if(doituong.id==3) { //TH đặc biệt -> tấn công xong die luôn
+                if(doituong.deadframe==0) doituong.HP=2000; //fix đang nổ thì bị pháp sư giết -> cancel đòn nổ
                 LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), doituong.deadframe, delays, 0, doituong.phe); //vì con cá nổ xong cũng đi luôn -> dùng sài tạm biến deadframe thay biến attackframe
                 if(doituong.deadframe==3*delays) {
                     for(int i=0; i<danhsachquan.size(); i++) {
@@ -148,11 +193,11 @@ void Work(Troop &doituong) {
                 doituong.deadframe++;
                 if(doituong.deadframe==6*delays) ClearTroop(doituong.stt);
             }
-            else if(frame%(18*delays)<(6*delays)) { //trong chu trình tấn công -> chạy hoạt ảnh tấn công, tấn công và di chuyển nếu có thể
-                if(doituong.id==5 && AllyInFrontOfArcher) LoadSprite(doituong.Textt, taolink(doituong.id, "Attack2"), frame, delays, 0, doituong.phe);
-                else LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), frame, delays, 0, doituong.phe);
+            else if(doituong.attackframe<(6*delays)) { //trong chu trình tấn công -> chạy hoạt ảnh tấn công, tấn công và di chuyển nếu có thể
+                if(doituong.id==5 && AllyInFrontOfArcher) LoadSprite(doituong.Textt, taolink(doituong.id, "Attack2"), doituong.attackframe, delays, 0, doituong.phe);
+                else LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), doituong.attackframe, delays, 0, doituong.phe);
 
-                if( frame%(18*delays)== (6*delays-1) ) {
+                if( doituong.attackframe == (6*delays-1) ) {
                     //xác định kẻ địch gần nhất
                     int mn=1000, sttdich=0;
                     for(int i=0; i<danhsachquan.size(); i++) {
@@ -169,6 +214,8 @@ void Work(Troop &doituong) {
                     tancong(doituong, danhsachquan[sttdich]);
                 }
 
+                doituong.attackframe++;
+                if(doituong.attackframe==6*delays) doituong.cooldownframe=0;
             }
             else { //không trong đợt tấn công -> tiến tiếp hoặc đứng yên đợi
                 if(CanMove) {
@@ -178,6 +225,9 @@ void Work(Troop &doituong) {
                     doituong.r += deltax;
                 }
                 else LoadSprite(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+
+                if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+                if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
             }
 
         }
@@ -186,14 +236,134 @@ void Work(Troop &doituong) {
             doituong.Textt.xx += deltax;
             doituong.l += deltax;
             doituong.r += deltax;
+
+            if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+            if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
         }
-        else LoadSprite(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+        else {
+            LoadSprite(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+
+            if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+            if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
+        }
+    }
+}
+
+void LoadSpriteHero(LTexture &Textt, string path, int frame, int timedelay, int numsheets, bool flip) {
+    if(path != "-1" && !Textt.loadFromFile(path.c_str())) {
+        cout<<"Khong mo duoc link sau: "<<path<<"\n";
+        exit(0);
+    }
+
+    int xsum=Textt.getWidth();
+    int ysum=Textt.getHeight();
+
+    if(numsheets == 0) { //nếu không phải objectile thì đầu vào là 0
+        numsheets = xsum/ysum;
+    }
+
+    SDL_Rect KichThuoc[numsheets+1];
+    for(int i=0; i<numsheets; i++) {
+        KichThuoc[i].x= 120+i*(xsum/numsheets);
+        KichThuoc[i].y= 30;
+        KichThuoc[i].w= 240;
+        KichThuoc[i].h= 240;
+    }
+
+    SDL_Rect* currentClip = &KichThuoc[ (frame / timedelay)%numsheets ];
+    Textt.render( Textt.xx , 0, currentClip, flip );
+}
+
+void WorkHero(Troop &doituong) {
+    bool EnemyInRange=false;
+    for(int i=0; i<danhsachquan.size(); i++) {
+        if(danhsachquan[i].phe == doituong.phe) continue;
+        if( ((abs(doituong.r - danhsachquan[i].l) <= doituong.range) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= doituong.range ) && doituong.phe) ) {
+            EnemyInRange=true;
+            break;
+        }
+    }
+
+    int khoangcachcho=5;
+    int deltax=doituong.SPD;
+
+    bool CanMove=true;
+    for(int i=0; i<danhsachquan.size(); i++) {
+        if(danhsachquan[i].stt == doituong.stt) continue;
+        if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
+            CanMove=false;
+            break;
+        }
+    }
+
+
+    if(doituong.HP <= 0) { //kiểm tra xem có ở ngưỡng máu tử hay không
+        if(doituong.deadframe<=6*delays) { //gọi từ 0 -> được 6*delays lần từ 0-47, khi ở 47 thì đã có cộng luôn lên 6*delays để erase đối tượng
+            LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Death"), doituong.deadframe, delays, 0, doituong.phe);
+            doituong.deadframe++;
+            if(doituong.deadframe==6*delays) ClearTroop(doituong.stt);
+        }
+    }
+    else {
+        if(EnemyInRange) {
+            if(doituong.attackframe<(6*delays)) { //trong chu trình tấn công -> chạy hoạt ảnh tấn công, tấn công và di chuyển nếu có thể
+                LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Attack"), doituong.attackframe, delays, 0, doituong.phe);
+
+                if( doituong.attackframe == (6*delays-1) ) {
+                    //xác định kẻ địch gần nhất
+                    int mn=1000, sttdich=0;
+                    for(int i=0; i<danhsachquan.size(); i++) {
+                        if(danhsachquan[i].phe == doituong.phe) continue;
+                        if( abs(doituong.r - danhsachquan[i].l) <= doituong.range  &&  !doituong.phe  &&  abs(doituong.r - danhsachquan[i].l) < mn ) {
+                            mn = abs(doituong.r - danhsachquan[i].l);
+                            sttdich=i;
+                        }
+                        if( abs(danhsachquan[i].r - doituong.l) <= doituong.range  &&  doituong.phe  &&  abs(danhsachquan[i].r - doituong.l) < mn ) {
+                            mn =  abs(danhsachquan[i].r - doituong.l);
+                            sttdich=i;
+                        }
+                    }
+                    tancong(doituong, danhsachquan[sttdich]);
+                }
+
+                doituong.attackframe++;
+                if(doituong.attackframe==6*delays) doituong.cooldownframe=0;
+            }
+            else { //không trong đợt tấn công -> tiến tiếp hoặc đứng yên đợi
+                if(CanMove) {
+                    LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Walk"), frame, delays, 0, doituong.phe);
+                    doituong.Textt.xx += deltax;
+                    doituong.l += deltax;
+                    doituong.r += deltax;
+                }
+                else LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+
+                if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+                if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
+            }
+
+        }
+        else if(CanMove) {
+            LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Walk"), frame, delays, 0, doituong.phe);
+            doituong.Textt.xx += deltax;
+            doituong.l += deltax;
+            doituong.r += deltax;
+
+            if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+            if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
+        }
+        else {
+            LoadSpriteHero(doituong.Textt, taolink(doituong.id, "Idle"), frame, delays, 0, doituong.phe);
+
+            if(doituong.cooldownframe < 18*delays) doituong.cooldownframe++;
+            if(doituong.cooldownframe == 18*delays) doituong.attackframe=0;
+        }
     }
 }
 
 bool AImove(bool hard, int DoiNha){
     int timesummon=400;
-    if(hard) timesummon=300;
+    if(hard || (DoiNha==2) ) timesummon=300;
 
     int l, r;
     if(DoiNha==2) l=1, r=3;
