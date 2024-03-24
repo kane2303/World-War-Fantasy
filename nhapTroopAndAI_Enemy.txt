@@ -1,3 +1,4 @@
+
 int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4};
 int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000};
 int dames[] =      {-1,   34,   20,   250,  50,   40,   50,   300};
@@ -87,6 +88,29 @@ void ClearTroop(int thutu) {
         }
 }
 
+void LTexture::render( int x, int y, SDL_Rect* clip, bool flip, bool hero)
+{
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
+
+	//Set clip rendering dimensions
+	if( clip != NULL )
+	{
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+	}
+
+    if(hero) renderQuad.y= 620 - renderQuad.h;
+    else renderQuad.y= 600 - renderQuad.h;
+
+	//Render to screen
+	if(!flip) SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+	else {
+	    SDL_RendererFlip flipType= SDL_FLIP_HORIZONTAL;
+        SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, 0.0, nullptr, flipType);
+	}
+}
+
 void LoadSprite(LTexture &Textt, string path, int frame, int timedelay, int numsheets, bool flip) {
     if(path != "-1" && !Textt.loadFromFile(path.c_str())) {
         cout<<"Khong mo duoc link sau: "<<path<<"\n";
@@ -165,6 +189,13 @@ void Work(Troop &doituong) {
         if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
             CanMove=false;
             break;
+        }
+        if(doituong.id==3) {
+            if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt && !doituong.phe)
+                if(danhsachquan[i].l - doituong.r - 2 <= khoangcachcho) deltax=1;
+
+            if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt && doituong.phe)
+                if(doituong.l - danhsachquan[i].r - 2 <= khoangcachcho) deltax=1;
         }
     }
 
@@ -271,7 +302,7 @@ void LoadSpriteHero(LTexture &Textt, string path, int frame, int timedelay, int 
     }
 
     SDL_Rect* currentClip = &KichThuoc[ (frame / timedelay)%numsheets ];
-    Textt.render( Textt.xx , 0, currentClip, flip );
+    Textt.render( Textt.xx , 0, currentClip, flip, true);
 }
 
 void WorkHero(Troop &doituong) {
@@ -290,10 +321,14 @@ void WorkHero(Troop &doituong) {
     bool CanMove=true;
     for(int i=0; i<danhsachquan.size(); i++) {
         if(danhsachquan[i].stt == doituong.stt) continue;
+        if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt)
+            if( max(danhsachquan[i].l, doituong.l) <= min(danhsachquan[i].r, doituong.r) ) CanMove=false;
         if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
             CanMove=false;
             break;
         }
+        if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt)
+            if(danhsachquan[i].l - doituong.r - 2 <= khoangcachcho) deltax=1;
     }
 
 
