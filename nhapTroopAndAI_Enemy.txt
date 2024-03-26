@@ -1,6 +1,6 @@
 int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4,     4,     4   };
 int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000,  3000,  5000};
-int dames[] =      {-1,   34,   20,   250,  50,   40,   50,   300,   0,     0   };
+int dames[] =      {-1,   34,   20,   300,  50,   40,   50,   300,   0,     0   };
 int SPDatks[] =    {-1,   24,   24,   24,   24,   24,   24,   24,    0,     0   };
 int ranges[] =     {-1,   5,    220,  5,    15,   220,  15,   15,    0,     0   };
 int SPDs[] =       {-1,   1,    1,    2,    1,    1,    1,    2,     0,     0   };
@@ -31,15 +31,23 @@ struct Troop{
         stt=thutu;
         if(!phee) {
             l=201;
+
             if(5<=idd && idd<=6) r=l+45;
-            else if(idd==4) r=l+30;
+            else if(idd==4) r=l+35;
+            else if(idd==1) r=l+40;
+            else if(idd==2) r=l+55;
+            else if(idd==3) r=l+50;
             else r=l+96;
+
             if(8 <= idd && idd <= 9) {l=0; r=l+200;}
         }
         else {
             r=1079;
-            if(4<=idd && idd<=6) l=r-45;
+            if(5<=idd && idd<=6) l=r-45;
             else if(idd==4) l=r-30;
+            else if(idd==1) l=r-40;
+            else if(idd==2) l=r-55;
+            else if(idd==3) l=r-50;
             else l=r-96;
             if(8 <= idd && idd <= 9) {r=1280; l=r-200;}
         }
@@ -83,8 +91,6 @@ bool CreateTroop(int id, int phe=false, bool hard=false) { //nếu là tạo lí
         if(phe) cntlinhbot++;
         else cntlinhplayer++;
     }
-
-    cout<<"Successful: "<<linh.phe<<" "<<linh.id<<" "<<linh.stt<<"\n";
 
     return true;
 }
@@ -215,6 +221,7 @@ void Work(Troop &doituong) {
         }
         if( max(danhsachquan[i].l, doituong.l) <= min(danhsachquan[i].r, doituong.r) ) EnemyInRange=true;
     }
+    if(doituong.id==3 && doituong.deadframe!=0) EnemyInRange=true;
 
     bool AllyInFrontOfArcher=false;
     for(int i=0; i<danhsachquan.size(); i++) {
@@ -226,24 +233,26 @@ void Work(Troop &doituong) {
         }
     }
 
-    int khoangcachcho=15;
-    if(doituong.id==3) khoangcachcho=0;
+    int khoangcachcho;
     int deltax=doituong.SPD;
 
     bool CanMove=true;
     for(int i=0; i<danhsachquan.size(); i++) {
         if(danhsachquan[i].stt == doituong.stt) continue;
 
-        if(doituong.id==3) khoangcachcho=0;
-        else if(doituong.phe==danhsachquan[i].phe)  khoangcachcho=40;
+        if(doituong.phe==danhsachquan[i].phe)  khoangcachcho=40;
+        else if(doituong.id==3) khoangcachcho=0;
         else khoangcachcho=5;
 
-        if( (doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt) || doituong.phe != danhsachquan[i].phe )
+        if( (doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt) || doituong.phe != danhsachquan[i].phe ) {
             if( max(danhsachquan[i].l, doituong.l) <= min(danhsachquan[i].r, doituong.r) ) CanMove=false;
-        if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
-            CanMove=false;
-            break;
+
+            if( ((abs(doituong.r - danhsachquan[i].l) <= khoangcachcho) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= khoangcachcho ) && doituong.phe) ) {
+                CanMove=false;
+                break;
+            }
         }
+
         if(doituong.id==3) {
             if(doituong.phe==danhsachquan[i].phe && danhsachquan[i].stt<doituong.stt && !doituong.phe && danhsachquan[i].id<8)
                 if(danhsachquan[i].l - doituong.r - 2 <= khoangcachcho) deltax=1;
