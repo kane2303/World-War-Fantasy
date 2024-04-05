@@ -796,6 +796,17 @@ void LoadData() {
     fi.close();
 }
 
+void LoadNewData() {
+    ifstream fi("newdata.txt");
+
+    fi>>frame>>cntlinh>>cntlinhplayer>>cntlinhbot>>playergold>>trangthai>>chedokho;
+
+    int n;
+    fi>>n>>n;
+
+    fi.close();
+}
+
 int main( int argc, char* args[] )
 {   srand(time(NULL));
 	//Start up SDL and create window
