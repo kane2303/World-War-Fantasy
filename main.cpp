@@ -757,6 +757,16 @@ void LoadData()
     fi.close();
 }
 
+void LoadNewData() {
+    ifstream fi("newdata.txt");
+
+    fi>>frame>>cntlinh>>cntlinhplayer>>cntlinhbot>>playergold>>trangthai>>chedokho;
+
+    int n;
+    fi>>n>>n;
+
+    fi.close();
+}
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
@@ -872,7 +882,7 @@ int main(int argc,char** argv )
                     {
                         if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();}
                         if(Quitbut.handleEvent(&e)) quit = 1;
-                        if(Nwgbut.handleEvent(&e)) {trangthai=1;paused=0;quit2=1;}
+                        if(Nwgbut.handleEvent(&e)) {LoadNewData();trangthai=1;paused=0;quit2=1;}
                     }
 
                     dot.handleEvent(e);
