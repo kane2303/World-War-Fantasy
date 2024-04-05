@@ -2,6 +2,7 @@
 #define TEXTUREMANGE_H
 #include<SDL.h>
 #include<SDL_image.h>
+#include<SDL_ttf.h>
 #include<bits/stdc++.h>
 #include"Engine.h"
 #define gRenderer  Engine::GetInstance()->GetRenderer()
@@ -17,7 +18,9 @@ public:
     ~LTexture();
     bool loadFromFile( string path );
     void free();
-    void render( int x, int y, SDL_Rect* clip = NULL, bool flip=false);
+    void rendermenu( int x, int y, SDL_Rect* clip = NULL, bool flip=false);
+    void render( int x, int y, SDL_Rect* clip = NULL, bool flip=false, bool hero=false);
+    bool loadFromRenderedText( std::string textureText, SDL_Color textColor );
     int getWidth();
     int getHeight();
     void SetRender();

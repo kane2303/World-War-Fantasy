@@ -63,7 +63,7 @@ void LButton::render(LTexture* Alpha,int x,int y,int szX,int szY,int layer_heigh
     }
     mPosition.x = x;
     mPosition.y = y;
-    Alpha->render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
+    Alpha->rendermenu( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
 }
 
 

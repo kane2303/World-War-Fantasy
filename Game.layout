@@ -2,9 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+	<File name="src\graphic\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2893" topLine="136" />
+			<Cursor1 position="1682" topLine="38" />
+		</Cursor>
+	</File>
+	<File name="src\graphic\TextureMange.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="570" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\Characters\Troops.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -12,29 +17,45 @@
 			<Cursor1 position="171" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="src\graphic\TextureMange.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="147" topLine="0" />
+			<Cursor1 position="1990" topLine="51" />
 		</Cursor>
 	</File>
-	<File name="src\graphic\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2803" topLine="33" />
+			<Cursor1 position="25697" topLine="204" />
 		</Cursor>
+		<Folding>
+			<Collapse line="64" />
+			<Collapse line="75" />
+			<Collapse line="109" />
+			<Collapse line="129" />
+			<Collapse line="209" />
+			<Collapse line="233" />
+			<Collapse line="255" />
+			<Collapse line="284" />
+			<Collapse line="295" />
+			<Collapse line="329" />
+			<Collapse line="340" />
+			<Collapse line="494" />
+			<Collapse line="523" />
+			<Collapse line="630" />
+		</Folding>
 	</File>
 	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="88" topLine="0" />
+			<Cursor1 position="416" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\graphic\Button.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="867" topLine="15" />
+			<Cursor1 position="867" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\graphic\TextureMange.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="250" topLine="0" />
+			<Cursor1 position="147" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

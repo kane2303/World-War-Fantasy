@@ -42,14 +42,17 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="../../../Desktop/SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/include/SDL2" />
-			<Add directory="../../../Desktop/SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/include/SDL2" />
+			<Add directory="SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/include/SDL2" />
+			<Add directory="SDL2_ttf-2.22.0/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2" />
 			<Add option="-lSDL2_image" />
-			<Add directory="../../../Desktop/SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/lib" />
-			<Add directory="../../../Desktop/SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/lib" />
+			<Add option="-lSDL2_ttf" />
+			<Add directory="SDL2-devel-2.30.0-mingw/SDL2-2.30.0/i686-w64-mingw32/lib" />
+			<Add directory="SDL2_image-devel-2.8.2-mingw/SDL2_image-2.8.2/i686-w64-mingw32/lib" />
+			<Add directory="SDL2_ttf-2.22.0/i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Characters/Troops.cpp" />
