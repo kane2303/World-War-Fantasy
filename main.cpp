@@ -32,7 +32,10 @@ LButton TroopsIcon1,TroopsIcon2,TroopsIcon3;
 LTexture TextTroopsIcon1,TextTroopsIcon2,TextTroopsIcon3,Textplayergold,Textbootcamp,Textbootcamp2;
 
 LButton Cntbut,Quitbut,Nwgbut;
-LTexture TextCntbut,TextQuitbut,TextNwgbut;
+LTexture TextCntbut,TextQuitbut,TextNwgbut,Textwin,Textlose;
+
+LButton TroopsIcon4,TroopsIcon5,TroopsIcon6,TroopsIcon7;
+LTexture TextTroop4,TextTroop5,TextTroop6,TextTroop7;
 int trangthai=0;
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
@@ -44,6 +47,9 @@ void loadMedia()
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
     Pausing.loadFromFile("assets/pausingscreen.png");
+    Textwin.loadFromFile("assets/winning.png");
+    Textlose.loadFromFile("assets/losing.png");
+    TextChange.loadFromFile("assets/chuyencanh.png");
     TextStA.loadFromFile("assets/mainscreen/playbutton.png");
     TextStB.loadFromFile("assets/mainscreen/resumebutton.png");
     TextStC.loadFromFile("assets/mainscreen/quitbutton.png");
@@ -53,18 +59,21 @@ void loadMedia()
 
     //doi 2
     gFont = TTF_OpenFont( "dpcomic.ttf", 28 );
-    BG2.loadFromFile("assets/bg.png");
-    BGframe.loadFromFile("assets/BGframe.png");
+    BG2.loadFromFile("assets/bg2.png");
+    BGframe.loadFromFile("assets/BGframe2.png");
     TextTroopsIcon1.loadFromFile("assets/troopsicon1.png");
     TextTroopsIcon2.loadFromFile("assets/troopsicon2.png");
     TextTroopsIcon3.loadFromFile("assets/troopsicon3.png");
-    TextChange.loadFromFile("assets/chuyencanh.png");
     TextCntbut.loadFromFile("assets/continuebutton.png");
     TextQuitbut.loadFromFile("assets/quitbutton.png");
     TextNwgbut.loadFromFile("assets/newgamebutton.png");
 
     //doi 3
     BG3.loadFromFile("assets/background2.jpg");
+    TextTroop4.loadFromFile("assets/troopsicon4.png");
+    TextTroop5.loadFromFile("assets/troopsicon5.png");
+    TextTroop6.loadFromFile("assets/troopsicon6.png");
+    TextTroop7.loadFromFile("assets/bossicon.png");
 }
 void Run_dot()
 {
@@ -121,10 +130,10 @@ int cntlinhplayer=0, cntlinhbot=0;
 int playergold=200;
 bool chedokho=false;
 queue<int> binhchungplayer;
-const int delays=7;
+const int delays=6;
 
 int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4,     4,     4   };
-int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000,  3000,  5000};
+int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000,  1500,  3000};
 int dames[] =      {-1,   34,   20,   300,  50,   40,   50,   300,   0,     0   };
 int SPDatks[] =    {-1,   24,   24,   24,   24,   24,   24,   24,    0,     0   };
 int ranges[] =     {-1,   5,    190,  5,    15,   220,  15,   15,    0,     0   };
@@ -328,6 +337,10 @@ void WorkBase(Troop &doituong)
             if(doituong.phe) EndGame=2; //cout<<"You win"
             else EndGame=-1; //cout<<"You lose"
         }
+    }
+    if(frame >= 25000){
+        if(trangthai==2) EndGame=1;
+        else EndGame=2;
     }
 
     string path=taolink(doituong.id, "Base");
@@ -767,10 +780,16 @@ void LoadNewData() {
 
     fi.close();
 }
+
+void ClearData() {
+    danhsachquan.clear();
+    while(!binhchungplayer.empty()) binhchungplayer.pop();
+}
+
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
-int dengiolendoi=0,alpha=0;
+
 void pre1()
 {
     SDL_RenderClear(gRenderer);
@@ -778,7 +797,6 @@ void pre1()
     Texturebackground2.SetRender();
     SDL_RenderClear(gRenderer);
     BG2.rendermenu(0,0);
-    SDL_Rect tmp{0,0,200,200};
     SDL_Color BCcolor= {241,16,24};
     Textbootcamp.loadFromRenderedText( to_string(danhsachquan[0].HP),BCcolor);
     Textbootcamp.rendermenu(45,450);
@@ -805,6 +823,38 @@ void last1()
     TroopsIcon2.render( &TextTroopsIcon2,1098,32,54,54,54);
     TroopsIcon3.render( &TextTroopsIcon3,1178,32,54,54,54);
 }
+void pre2()
+{
+    SDL_RenderClear(gRenderer);
+    Run_dot();
+    Texturebackground2.SetRender();
+    SDL_RenderClear(gRenderer);
+    BG3.rendermenu(0,0);
+    SDL_Color BCcolor= {241,16,24};
+    Textbootcamp.loadFromRenderedText( to_string(danhsachquan[0].HP),BCcolor);
+    Textbootcamp.rendermenu(45,450);
+
+    Textbootcamp2.loadFromRenderedText( to_string(danhsachquan[1].HP),BCcolor);
+    Textbootcamp2.rendermenu(3100,450);
+}
+void last2()
+{
+    SDL_SetRenderTarget(gRenderer,nullptr);
+    SDL_RenderClear(gRenderer);
+    Texturebackground2.rendermenu(0,0,&camera);
+
+    SDL_Color goldColor= {255,215,0};
+    string getgold= "$ ";
+    getgold+=to_string(playergold);
+    Textplayergold.loadFromRenderedText( getgold,goldColor);
+    Textplayergold.rendermenu(5,5);
+
+    BGframe.rendermenu(970,0);
+    TroopsIcon4.render( &TextTroop4,1018,32,54,54,54);
+    TroopsIcon5.render( &TextTroop5,1098,32,54,54,54);
+    TroopsIcon6.render( &TextTroop6,1178,32,54,54,54);
+    TroopsIcon7.render( &TextTroop7,1160,90,120,60,60);
+}
 
 bool paused=0,Lpaused=0;
 void Runpause()
@@ -812,6 +862,13 @@ void Runpause()
     SDL_RenderClear(gRenderer);
     Pausing.rendermenu(0,0);
     Cntbut.render( &TextCntbut,400,300,500,100,100);
+    Quitbut.render( &TextQuitbut,400,500,500,100,100);
+    Nwgbut.render( &TextNwgbut,400,400,500,100,100);
+}
+void Runend(LTexture &Choosen)
+{
+    SDL_RenderClear(gRenderer);
+    Choosen.rendermenu(0,0);
     Quitbut.render( &TextQuitbut,400,500,500,100,100);
     Nwgbut.render( &TextNwgbut,400,400,500,100,100);
 }
@@ -835,7 +892,7 @@ int main(int argc,char** argv )
             if(trangthai==0)
             {
                 if(StartA.handleEvent(&e)) trangthai = 1;
-                StartB.handleEvent(&e);
+                if(StartB.handleEvent(&e)) {LoadData();}
                 if(StartC.handleEvent(&e)) quit = 1;
             }
             else if( trangthai == 1 )
@@ -867,6 +924,7 @@ int main(int argc,char** argv )
             CreateTroop(8, 1, chedokho);
             ///vòng lặp chính đời 2
             bool quit2 = 0;
+            int alpha=-300;
             while(!quit2)
             {
                 if(quit) break;
@@ -874,6 +932,18 @@ int main(int argc,char** argv )
 
                 while( SDL_PollEvent( &e ) != 0 )
                 {
+                    if(EndGame == -1)
+                    {
+                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Nwgbut.handleEvent(&e))  {
+                            ClearData();
+                            LoadNewData();
+                            calling=0;
+                            paused=0;
+                            quit2=1;
+                            trangthai=1;
+                        }
+                    }
                     if( e.type == SDL_QUIT )
                     {
                         quit = true;
@@ -882,7 +952,14 @@ int main(int argc,char** argv )
                     {
                         if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();}
                         if(Quitbut.handleEvent(&e)) quit = 1;
-                        if(Nwgbut.handleEvent(&e)) {LoadNewData();trangthai=1;paused=0;quit2=1;}
+                        if(Nwgbut.handleEvent(&e)) {
+                            ClearData();
+                            LoadNewData();
+                            calling=0;
+                            paused=0;
+                            quit2=1;
+                            trangthai=1;
+                        }
                     }
 
                     dot.handleEvent(e);
@@ -898,14 +975,36 @@ int main(int argc,char** argv )
                         }
                     }
                 }
-                if(!paused){
+                if(EndGame!=0)
+                {
+                    if(EndGame==-1)
+                    {
+                        Runend(Textlose);
+                    }
+                    else {
+                        if(alpha+1>255)
+                        {
+                            alpha=255;
+                            ClearData();
+                            LoadNewData();
+                            calling=0;
+                            trangthai=3;
+                            quit2=1;
+                        }
+                        else alpha+=1;
+                        TextChange.setAlpha(alpha);
+                        TextChange.rendermenu(0,0);
+                    }
+                }
+                else if(!paused && !quit2){
                     pre1();
                     AImove(chedokho, trangthai);
 
                     if(calling != 0)  CreateTroop(calling,0);
+
                     for(int i=0; i<danhsachquan.size(); i++)
                     {
-                        if(danhsachquan[i].Textt.xx <-100 || danhsachquan[i].Textt.xx >3300) ClearTroop(danhsachquan[i].stt); //delete this one
+                        if(danhsachquan[i].Textt.xx <-100 || danhsachquan[i].Textt.xx >3300) ClearTroop(danhsachquan[i].stt);
                         if(danhsachquan[i].id < 7) Work(danhsachquan[i]);
                         else if(danhsachquan[i].id == 7) WorkHero(danhsachquan[i]);
                         else WorkBase(danhsachquan[i]);
@@ -913,15 +1012,102 @@ int main(int argc,char** argv )
                     frame++;
                     last1();
                 }
-                else Runpause();
+                else if(paused)
+                {
+                    cout<<"Run_Pause\n";
+                    Runpause();
+                }
+                Engine::GetInstance()->Render();
+            }
+        }
+        if(trangthai==3) //chuyen doi reset bien toan the vs danh sach
+        {
+            ///*** doi 3 ***////
+            EndGame=0;
+            CreateTroop(9, 0, chedokho);
+            CreateTroop(9, 1, chedokho);
+            ///vòng lặp chính đời 3
+            bool quit3 = 0;
+
+            while(!quit3)
+            {
+                if(quit) break;
+                int calling=0;
+
+                while( SDL_PollEvent( &e ) != 0 )
+                {
+                    if( e.type == SDL_QUIT )
+                    {
+                        quit = true;
+                    }
+                    if(paused)
+                    {
+                        if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();}
+                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Nwgbut.handleEvent(&e)) {
+                            ClearData();
+                            LoadNewData();
+                            calling=0;
+                            paused=0;
+                            quit3=1;
+                            trangthai=1;
+                        }
+                    }
+
+                    dot.handleEvent(e);
+                    if(TroopsIcon4.handleEvent(&e)) calling = 4;
+                    if(TroopsIcon5.handleEvent(&e)) calling = 5;
+                    if(TroopsIcon6.handleEvent(&e)) calling = 6;
+                    if(TroopsIcon7.handleEvent(&e)) calling = 7;
+                    if(e.type == SDL_KEYDOWN)
+                    {
+                        if(e.key.keysym.sym==SDLK_p)
+                        {
+                            paused=1;
+                            SaveData();
+                        }
+                    }
+                    if(EndGame!=0)
+                    {
+                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Nwgbut.handleEvent(&e)) {
+                            ClearData();
+                            LoadNewData();
+                            calling=0;
+                            paused=0;
+                            quit3=1;
+                            trangthai=1;
+                        }
+                    }
+                }
+                if(EndGame!=0)
+                {
+                    if(EndGame==-1) Runend(Textlose);
+                    else Runend(Textwin);
+                }
+                else if(!paused && !quit3){
+                    pre2();
+                    AImove(chedokho, trangthai);
+
+                    if(calling != 0)  CreateTroop(calling,0);
+                    //cout<<danhsachquan.size()<<"\n";
+                    for(int i=0; i<danhsachquan.size(); i++)
+                    {   //if(danhsachquan[i].id==8) cout<<danhsachquan[i].id<<" "<<danhsachquan[i].phe<<" "<<danhsachquan[i].HP<<" "<<danhsachquan[i].stt<<"\n";
+                        if(danhsachquan[i].Textt.xx <-100 || danhsachquan[i].Textt.xx >3300) ClearTroop(danhsachquan[i].stt);
+                        if(danhsachquan[i].id < 7) Work(danhsachquan[i]);
+                        else if(danhsachquan[i].id == 7) WorkHero(danhsachquan[i]);
+                        else WorkBase(danhsachquan[i]);
+                    }
+                    //cout<<"\n";
+                    frame++;
+                    last2();
+                    if(frame%1000==0) cout<<frame<<"\n";
+                }
+                else if(paused) Runpause();
 
                 Engine::GetInstance()->Render();
             }
         }
-//        if(trangthai==3) chuyen doi reset bien toan the vs danh sach
-//        {
-//            BG3.rendermenu(0,0);
-//        }
 //
         Engine::GetInstance()->Render();
         SDL_RenderClear(gRenderer);

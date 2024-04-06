@@ -92,8 +92,8 @@ void LTexture::render( int x, int y, SDL_Rect* clip, bool flip, bool hero){
 		renderQuad.h = clip->h;
 	}
 
-    if(hero) renderQuad.y= 620 - renderQuad.h;
-    else renderQuad.y= 650 - renderQuad.h;
+    if(hero) renderQuad.y= 720 - renderQuad.h;
+    else renderQuad.y= 700 - renderQuad.h;
 
 	if(!flip) SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 	else {
