@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include<SDL_ttf.h>
 #include<bits/stdc++.h>
 #include"Button.h"
@@ -42,11 +43,14 @@ LTexture TextUltimate;
 int trangthai=0;
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
+Mix_Music *gMusic = NULL;
 Dot dot;
 
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
+    gMusic = Mix_LoadMUS( "knightmu_out.wav" );
+
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
     Pausing.loadFromFile("assets/pausingscreen.png");
@@ -289,8 +293,8 @@ void ClearTroop(int thutu) {
                     if(danhsachquan[r].stt == danhsachquan[i].behind) {
                         luur=r; break;
                     }
-                if(luul!=-1) danhsachquan[luul].behind=luur;
-                if(luur!=-1) danhsachquan[luur].prev=luul;
+                if(luul!=-1) danhsachquan[luul].behind = danhsachquan[i].behind;
+                if(luur!=-1) danhsachquan[luur].prev = danhsachquan[i].prev;
             }
             else {
                 binhchungplayer.pop();
@@ -393,13 +397,14 @@ void Work(Troop &doituong) {
     bool EnemyInRange=false;
     for(int i=0; i<danhsachquan.size(); i++) {
         if(danhsachquan[i].phe == doituong.phe) continue;
+        if(danhsachquan[i].HP <= 0) continue;
         if( ((abs(doituong.r - danhsachquan[i].l) <= doituong.range) && !doituong.phe )  ||  (( abs(danhsachquan[i].r - doituong.l) <= doituong.range ) && doituong.phe) ) {
             EnemyInRange=true;
             break;
         }
         if( max(danhsachquan[i].l, doituong.l) <= min(danhsachquan[i].r, doituong.r) ) EnemyInRange=true;
     }
-    if(doituong.id==3 && doituong.deadframe!=0) EnemyInRange=true;
+    if(doituong.id==3 && doituong.attackframe!=0) EnemyInRange=true;
 
     bool AllyInFrontOfArcher=false;
     for(int i=0; i<danhsachquan.size(); i++) {
@@ -442,7 +447,7 @@ void Work(Troop &doituong) {
 
 //    if(doituong.id==3 && doituong.phe) cout<<doituong.stt<<" "<<EnemyInRange<<" "<<CanMove<<" "<<deltax<<"\n";
 
-    if(doituong.HP <= 0) { //kiểm tra xem có ở ngưỡng máu tử hay không
+    if(doituong.HP <= 0 && !(doituong.id==3 && doituong.attackframe>0)) { //kiểm tra xem có ở ngưỡng máu tử hay không
         if(doituong.deadframe<=6*delays) { //gọi từ 0 -> được 6*delays lần từ 0-47, khi ở 47 thì đã có cộng luôn lên 6*delays để erase đối tượng
             LoadSprite(doituong.Textt, taolink(doituong.id, "Death"), doituong.deadframe, delays, 0, doituong.phe);
             doituong.deadframe++;
@@ -452,10 +457,12 @@ void Work(Troop &doituong) {
     else {
         if(EnemyInRange) {
             if(doituong.id==3) { //TH đặc biệt -> tấn công xong die luôn
-                if(doituong.deadframe==0) doituong.HP=2000; //fix đang nổ thì bị pháp sư giết -> cancel đòn nổ
-                LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), doituong.deadframe, delays, 0, doituong.phe); //vì con cá nổ xong cũng đi luôn -> dùng sài tạm biến deadframe thay biến attackframe
-                if(doituong.deadframe==3*delays) {
-                    int mn=80, sttdich;
+                if(doituong.attackframe==0) doituong.HP=1;
+                if(doituong.attackframe==1) doituong.HP=0;
+
+                LoadSprite(doituong.Textt, taolink(doituong.id, "Attack"), doituong.attackframe, delays, 0, doituong.phe); //vì con cá nổ xong cũng đi luôn -> dùng sài tạm biến attackframe thay biến attackframe
+                if(doituong.attackframe==3*delays) {
+                    int mn=300, sttdich;
                     for(int i=0; i<danhsachquan.size(); i++)
                         if(danhsachquan[i].stt==doituong.stt) sttdich=i;
 
@@ -468,8 +475,8 @@ void Work(Troop &doituong) {
                     }
                     tancong(doituong, danhsachquan[sttdich]);
                 }
-                doituong.deadframe++;
-                if(doituong.deadframe==6*delays) ClearTroop(doituong.stt);
+                doituong.attackframe++;
+                if(doituong.attackframe==6*delays) ClearTroop(doituong.stt);
             }
             else if(doituong.attackframe<(6*delays)) { //trong chu trình tấn công -> chạy hoạt ảnh tấn công, tấn công và di chuyển nếu có thể
                 if(doituong.id==5 && AllyInFrontOfArcher) LoadSprite(doituong.Textt, taolink(doituong.id, "Attack2"), doituong.attackframe, delays, 0, doituong.phe);
@@ -778,12 +785,13 @@ int ThutuToPos(int thutu) {
 }
 
 void UltimateSkill() { //ứng dụng thuật toán dijkstra
-    if(playergold < 200) return;
-    else playergold -= 200;
+    if(playergold < 150) return;
+    else playergold -= 150;
 
     int ChosenOne = -1, priovalue=-1;
     for(int i=0; i<danhsachquan.size(); i++)
         if(danhsachquan[i].phe && danhsachquan[i].id<8) {
+//            cout<<danhsachquan[i].stt<<" ";
             int score=0, cnt=0;
             int n=danhsachquan.size();
             int dp[ n ];
@@ -798,8 +806,12 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
                 q.pop();
                 if(val>dp[id]) continue;
 
-                cnt++;
-                if(danhsachquan[id].HP <= 100-cnt*10) score++;
+                if(danhsachquan[id].HP > 0) {
+                    if(danhsachquan[id].HP <= 100-cnt*10) score+=300;
+                    else score+= 100-cnt*10;
+
+                    cnt++;
+                }
 
                 int pos= ThutuToPos(danhsachquan[id].prev);
                 if(pos != -1)
@@ -820,6 +832,7 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
                 ChosenOne=i;
             }
         }
+//    cout<<"\n";
 
     //ghi nhan TH toi uu va tan cong linh
     if(ChosenOne !=-1) {
@@ -837,10 +850,13 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
             q.pop();
             if(val>dp[id]) continue;
 
-            cnt++;
 //            cout<<danhsachquan[id].stt<<" ";
-            danhsachquan[id].HP -= 100-cnt*10;
-            danhsachquan[id].cursed=true;
+            if(danhsachquan[id].HP > 0) {
+                danhsachquan[id].HP -= 100-cnt*10;
+                danhsachquan[id].cursed=true;
+                cnt++;
+//                cout<<danhsachquan[id].id<<" "<<danhsachquan[id].stt<<"    ";
+            }
 
             int pos= ThutuToPos(danhsachquan[id].prev);
             if(pos != -1)
@@ -855,10 +871,9 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
                     q.push({-dp[pos], pos});
                 }
         }
-//        cout<<"\n";
+//        cout<<"\n\n";
     }
 }
-
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
@@ -952,11 +967,15 @@ int main(int argc,char** argv )
 {
     Engine::GetInstance()->Init();
     TTF_Init();
+    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
     loadMedia();
     bool quit = false;
     SDL_Event e;
     while( !quit )
     {
+
+        Mix_PlayMusic( gMusic, -1 );
+
         int trangthaitruoc = trangthai;
         while( SDL_PollEvent( &e ) != 0 )
         {
@@ -1213,5 +1232,9 @@ int main(int argc,char** argv )
     }
     Engine::GetInstance()->Quit();
 
+	Mix_FreeMusic( gMusic );
+	gMusic = NULL;
+
+	Mix_Quit();
     return 0;
 }

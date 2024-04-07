@@ -469,9 +469,10 @@
 	<SDL.h>
 	<SDL_image.h>
 
-1712488605 source:c:\users\bogie\onedrive\documents\github\knight\main.cpp
+1712508806 source:c:\users\bogie\onedrive\documents\github\knight\main.cpp
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	<SDL_ttf.h>
 	<bits/stdc++.h>
 	"Button.h"
@@ -507,7 +508,7 @@
 1711533634 source:c:\users\bogie\onedrive\documents\github\knight\src\graphic\button.cpp
 	"Button.h"
 
-1711538452 source:c:\users\bogie\onedrive\documents\github\knight\src\core\engine.cpp
+1712505508 source:c:\users\bogie\onedrive\documents\github\knight\src\core\engine.cpp
 	"Engine.h"
 
 1711095027 c:\users\bogie\onedrive\documents\github\knight\src\core\engine.h
@@ -929,6 +930,15 @@
 
 1711295492 c:\users\bogie\onedrive\documents\github\knight\sdl2_ttf-2.22.0\i686-w64-mingw32\include\sdl2\sdl_ttf.h
 	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451801791 c:\users\bogie\onedrive\documents\github\knight\sdl2_mixer-devel-2.0.1-mingw\sdl2_mixer-2.0.1\i686-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
 	"begin_code.h"
 	"close_code.h"
 
