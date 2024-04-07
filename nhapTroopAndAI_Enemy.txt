@@ -21,7 +21,7 @@ int playergold=2000;
 int trangthai=2;
 bool chedokho=false;
 queue<int> binhchungplayer;
-const int delays=6;
+const int delays=8;
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~end merge 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //Starts up SDL and creates window
@@ -257,6 +257,8 @@ struct Troop{
     int killreward;
     int prev;
     int behind;
+    bool cursed;
+    int thunderframe;
 
     Troop(){
         stt=0;
@@ -277,6 +279,8 @@ struct Troop{
         killreward=0;
         prev=-1;
         behind=-1;
+        cursed=false;
+        thunderframe=0;
     }
 
     Troop(int idd, int thutu, int phee) {
@@ -323,6 +327,8 @@ struct Troop{
         killreward=killrewards[idd];
         prev=-1;
         behind=-1;
+        cursed=0;
+        thunderframe=0;
     }
 };
 
@@ -435,10 +441,20 @@ void LoadSprite(LTexture &Textt, string path, int frame, int timedelay, int nums
     Textt.render( Textt.xx , 0, currentClip, flip );
 }
 
+string NumToString(int x) {
+    string res="";
+    if(x==0) return "0";
+    while(x>0) {
+        char c='0'+x%10;
+        res=c+res;
+        x/=10;
+    }
+    return res;
+}
+
 string taolink(int id, string thaotac) {
     string res="TroopSprite/";
-    char c='0'+id;
-    res+=c;
+    res+=NumToString(id);
     res+='/';
     res+=thaotac;
     res+=".png";
@@ -619,6 +635,14 @@ void Work(Troop &doituong) {
             if(doituong.cooldownframe == 12*delays) doituong.attackframe=0;
         }
     }
+    if(doituong.cursed) {
+        LoadSprite(doituong.Textt, taolink(10, "Thunder"), doituong.thunderframe, delays, 0, doituong.phe);
+        doituong.thunderframe++;
+        if(doituong.thunderframe == 6*delays) {
+            doituong.cursed=false;
+            doituong.thunderframe=0;
+        }
+    }
 }
 
 void LoadSpriteHero(LTexture &Textt, string path, int frame, int timedelay, int numsheets, bool flip) {
@@ -780,6 +804,8 @@ void SaveData() {
         fo<<danhsachquan[i].killreward<<" ";
         fo<<danhsachquan[i].prev<<" ";
         fo<<danhsachquan[i].behind<<" ";
+        fo<<danhsachquan[i].cursed<<" ";
+        fo<<danhsachquan[i].thunderframe<<" ";
         fo<<"\n";
     }
     danhsachquan.clear();
@@ -819,6 +845,8 @@ void LoadData() {
         fi>>Linh.killreward;
         fi>>Linh.prev;
         fi>>Linh.behind;
+        fi>>Linh.cursed;
+        fi>>Linh.thunderframe;
         Linh.Textt.xx=Linh.l;
         danhsachquan.push_back(Linh);
     }
@@ -924,8 +952,9 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
             if(val>dp[id]) continue;
 
             cnt++;
-            cout<<danhsachquan[id].stt<<" ";
+//            cout<<danhsachquan[id].stt<<" ";
             danhsachquan[id].HP -= 100-cnt*10;
+            danhsachquan[id].cursed=true;
 
             int pos= ThutuToPos(danhsachquan[id].prev);
             if(pos != -1)
@@ -940,7 +969,7 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
                     q.push({-dp[pos], pos});
                 }
         }
-        cout<<"\n";
+//        cout<<"\n";
     }
 }
 
@@ -994,14 +1023,14 @@ int main( int argc, char* args[] )
         SDL_RenderClear( gRenderer );
 
 ///~~~~~~~~~main change to test game~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//        if(frame%100==0) cout<<frame<<"\n";
+        if(frame%100==0) cout<<frame<<"\n";
         //Player but it is a BOT
         if(frame%400==0 && !(1000<frame && frame<(1000+200)) ) {
             int l=1, r=3;
             if(trangthai==3) l=4, r=7;
             CreateTroop(Rand(l,r), 0);
         }
-//        if(frame%800==0 && !(1000<frame && frame<(1000+200)) ) UltimateSkill();
+        if(frame%800==0 && !(1000<frame && frame<(1000+200)) ) UltimateSkill();
 
         int changee=1000;
 
