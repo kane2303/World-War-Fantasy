@@ -2,75 +2,80 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\Characters\Troops.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="171" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\graphic\TextureMange.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2067" topLine="61" />
+			<Cursor1 position="301" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="15067" topLine="210" />
+			<Cursor1 position="1213" topLine="40" />
 		</Cursor>
 		<Folding>
-			<Collapse line="50" />
 			<Collapse line="87" />
 			<Collapse line="98" />
 			<Collapse line="132" />
 			<Collapse line="152" />
 			<Collapse line="248" />
+			<Collapse line="279" />
+			<Collapse line="309" />
+			<Collapse line="334" />
+			<Collapse line="345" />
 			<Collapse line="354" />
-			<Collapse line="385" />
-			<Collapse line="540" />
-			<Collapse line="565" />
-			<Collapse line="655" />
-			<Collapse line="675" />
-			<Collapse line="714" />
-			<Collapse line="757" />
-			<Collapse line="768" />
-			<Collapse line="780" />
-			<Collapse line="786" />
-			<Collapse line="881" />
-			<Collapse line="896" />
-			<Collapse line="915" />
-			<Collapse line="929" />
-			<Collapse line="950" />
-			<Collapse line="958" />
-			<Collapse line="966" />
-			<Collapse line="1002" />
-			<Collapse line="1009" />
-			<Collapse line="1015" />
+			<Collapse line="384" />
+			<Collapse line="394" />
+			<Collapse line="539" />
+			<Collapse line="564" />
+			<Collapse line="654" />
+			<Collapse line="674" />
+			<Collapse line="713" />
+			<Collapse line="756" />
+			<Collapse line="767" />
+			<Collapse line="779" />
+			<Collapse line="785" />
+			<Collapse line="880" />
+			<Collapse line="895" />
+			<Collapse line="914" />
+			<Collapse line="928" />
+			<Collapse line="949" />
+			<Collapse line="957" />
+			<Collapse line="1001" />
+			<Collapse line="1008" />
+			<Collapse line="1014" />
 			<Collapse line="1120" />
+			<Collapse line="1216" />
 			<Collapse line="1218" />
+			<Collapse line="1224" />
 		</Folding>
-	</File>
-	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="579" topLine="0" />
-		</Cursor>
 	</File>
 	<File name="src\graphic\Button.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="867" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\graphic\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="src\Characters\Troops.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1682" topLine="38" />
+			<Cursor1 position="171" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="579" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\graphic\TextureMange.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="570" topLine="0" />
+			<Cursor1 position="315" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="src\graphic\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="301" topLine="0" />
+			<Cursor1 position="1682" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\graphic\TextureMange.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1304" topLine="45" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -49,7 +49,7 @@ Dot dot;
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
-    gMusic = Mix_LoadMUS( "knightmu_out.wav" );
+//    gMusic = Mix_LoadMUS( ".wav" );
 
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
@@ -68,19 +68,19 @@ void loadMedia()
     gFont = TTF_OpenFont( "dpcomic.ttf", 28 );
     BG2.loadFromFile("assets/bg2.png");
     BGframe.loadFromFile("assets/BGframe2.png");
-    TextTroopsIcon1.loadFromFile("assets/troopsicon1.png");
-    TextTroopsIcon2.loadFromFile("assets/troopsicon2.png");
-    TextTroopsIcon3.loadFromFile("assets/troopsicon3.png");
+    TextTroopsIcon1.loadFromFile2("assets/troopsicon1.png");
+    TextTroopsIcon2.loadFromFile2("assets/troopsicon2.png");
+    TextTroopsIcon3.loadFromFile2("assets/troopsicon3.png");
     TextCntbut.loadFromFile("assets/continuebutton.png");
     TextQuitbut.loadFromFile("assets/quitbutton.png");
     TextNwgbut.loadFromFile("assets/newgamebutton.png");
 
     //doi 3
     BG3.loadFromFile("assets/background2.jpg");
-    TextTroop4.loadFromFile("assets/troopsicon4.png");
-    TextTroop5.loadFromFile("assets/troopsicon5.png");
-    TextTroop6.loadFromFile("assets/troopsicon6.png");
-    TextTroop7.loadFromFile("assets/bossicon.png");
+    TextTroop4.loadFromFile2("assets/troopsicon4.png");
+    TextTroop5.loadFromFile2("assets/troopsicon5.png");
+    TextTroop6.loadFromFile2("assets/troopsicon6.png");
+    TextTroop7.loadFromFile2("assets/bossicon.png");
 
     TextUltimate.loadFromFile("assets/ulti.png");
 }
@@ -363,7 +363,6 @@ void WorkBase(Troop &doituong) {
             else EndGame=-1;
         }
     }
-
     string path=taolink(doituong.id, "Base");
     if(!doituong.Textt.loadFromFile(path.c_str())) {
         cout<<"Khong mo duoc link sau: "<<path<<"\n";
@@ -898,19 +897,19 @@ void last1()
     SDL_SetRenderTarget(gRenderer,nullptr);
     SDL_RenderClear(gRenderer);
     Texturebackground2.rendermenu(0,0,&camera);
+    BGframe.rendermenu(0,0);
 
     SDL_Color goldColor= {255,215,0};
     string getgold= "$ ";
     getgold+=to_string(playergold);
     Textplayergold.loadFromRenderedText( getgold,goldColor);
-    Textplayergold.rendermenu(5,5);
+    Textplayergold.rendermenu(5,40);
 
 
-    BGframe.rendermenu(970,0);
-    TroopsIcon1.render( &TextTroopsIcon1,1018,32,54,54,54);
-    TroopsIcon2.render( &TextTroopsIcon2,1098,32,54,54,54);
-    TroopsIcon3.render( &TextTroopsIcon3,1178,32,54,54,54);
-    Ultimate.render(    &TextUltimate,1080,90,200,60,60);
+    TroopsIcon1.render( &TextTroopsIcon1,200,0,120,120,120);
+    TroopsIcon2.render( &TextTroopsIcon2,400,0,120,120,120);
+    TroopsIcon3.render( &TextTroopsIcon3,600,0,120,120,120);
+    Ultimate.render(    &TextUltimate,1010,0,270,150,150);
 }
 void pre2()
 {
@@ -931,19 +930,18 @@ void last2()
     SDL_SetRenderTarget(gRenderer,nullptr);
     SDL_RenderClear(gRenderer);
     Texturebackground2.rendermenu(0,0,&camera);
+    BGframe.rendermenu(0,0);
 
     SDL_Color goldColor= {255,215,0};
     string getgold= "$ ";
     getgold+=to_string(playergold);
     Textplayergold.loadFromRenderedText( getgold,goldColor);
-    Textplayergold.rendermenu(5,5);
+    Textplayergold.rendermenu(5,40);
 
-    BGframe.rendermenu(970,0);
-    TroopsIcon4.render( &TextTroop4,1018,32,54,54,54);
-    TroopsIcon5.render( &TextTroop5,1098,32,54,54,54);
-    TroopsIcon6.render( &TextTroop6,1178,32,54,54,54);
-    Ultimate.render(    &TextUltimate,1080,90,200,60,60);
-    TroopsIcon7.render( &TextTroop7,1160,150,120,60,60);
+    TroopsIcon4.render( &TextTroop4,200,0,120,120,120);
+    TroopsIcon5.render( &TextTroop5,400,0,120,120,120);
+    TroopsIcon6.render( &TextTroop6,600,0,120,120,120);
+    TroopsIcon7.render( &TextTroop7,800,0,120,120,120);
 }
 
 bool paused=0,Lpaused=0;
@@ -971,10 +969,10 @@ int main(int argc,char** argv )
     loadMedia();
     bool quit = false;
     SDL_Event e;
+    Mix_PlayMusic( gMusic, -1 );
     while( !quit )
     {
 
-        Mix_PlayMusic( gMusic, -1 );
 
         int trangthaitruoc = trangthai;
         while( SDL_PollEvent( &e ) != 0 )
@@ -1108,6 +1106,7 @@ int main(int argc,char** argv )
                         else WorkBase(danhsachquan[i]);
                     }
                     frame++;
+                    if(frame%150==0) playergold+=5;
                     last1();
                 }
                 else if(paused)
@@ -1156,7 +1155,6 @@ int main(int argc,char** argv )
                     if(TroopsIcon5.handleEvent(&e)) calling = 5;
                     if(TroopsIcon6.handleEvent(&e)) calling = 6;
                     if(TroopsIcon7.handleEvent(&e)) calling = 7;
-                    if(Ultimate.handleEvent(&e)) calling =11;
                     if(e.type == SDL_KEYDOWN)
                     {
                         if(e.key.keysym.sym==SDLK_p)
@@ -1203,6 +1201,7 @@ int main(int argc,char** argv )
                     //cout<<"\n";
                     frame++;
                     last2();
+                    if(frame%150==0) playergold+=5;
                 //    if(frame%1000==0) cout<<frame<<"\n";
                 }
                 else if(paused) Runpause();

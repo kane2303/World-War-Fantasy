@@ -17,6 +17,7 @@ public:
     LTexture();
     ~LTexture();
     bool loadFromFile( string path );
+    bool loadFromFile2( string path );
     void free();
     void rendermenu( int x, int y, SDL_Rect* clip = NULL, bool flip=false);
     void render( int x, int y, SDL_Rect* clip = NULL, bool flip=false, bool hero=false);
