@@ -965,7 +965,7 @@ int main(int argc,char** argv )
 {
     Engine::GetInstance()->Init();
     TTF_Init();
-    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
+//    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
     loadMedia();
     bool quit = false;
     SDL_Event e;
