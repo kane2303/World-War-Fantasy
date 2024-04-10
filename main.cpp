@@ -49,7 +49,7 @@ Dot dot;
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
-//    gMusic = Mix_LoadMUS( ".wav" );
+//    gMusic = Mix_LoadMUS( "nen.wav" );
 
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
@@ -140,10 +140,9 @@ int playergold=200;
 bool chedokho=false;
 queue<int> binhchungplayer;
 const int delays=6;
-
 int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4,     4,     4   };
 int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000,  1500,  3000};
-int dames[] =      {-1,   34,   20,   300,  50,   40,   50,   300,   0,     0   };
+int dames[] =      {-1,   34,   20,   300,  50,   25,   50,   300,   0,     0   };
 int SPDatks[] =    {-1,   24,   24,   24,   24,   24,   24,   24,    0,     0   };
 int ranges[] =     {-1,   5,    190,  5,    15,   220,  15,   15,    0,     0   };
 int SPDs[] =       {-1,   2,    2,    3,    2,    2,    2,    3,     0,     0   };
@@ -381,17 +380,15 @@ void WorkBase(Troop &doituong) {
     doituong.Textt.render( doituong.Textt.xx , 0, currentClip, doituong.phe, false );
     return;
 }
-
 void tancong(Troop &attacker, Troop &defender) {
     int satthuong=attacker.dame;
     if(attacker.binhchung == 1 && defender.binhchung == 2) satthuong*=2;
-    if(attacker.binhchung == 2 && defender.binhchung == 3) satthuong*=2;
+    if(attacker.binhchung == 2 && defender.binhchung == 3) satthuong*=3;
     if(attacker.binhchung == 3 && defender.binhchung == 1) satthuong*=2;
-    if(attacker.id == 2 && defender.id == 3) satthuong= satthuong/2*3;
+    if(attacker.id == 2 && defender.id == 3) satthuong= satthuong/3*4;
 
     defender.HP -= satthuong;
 }
-
 void Work(Troop &doituong) {
     bool EnemyInRange=false;
     for(int i=0; i<danhsachquan.size(); i++) {
@@ -906,9 +903,9 @@ void last1()
     Textplayergold.rendermenu(5,25);
 
 
-    TroopsIcon1.render( &TextTroopsIcon1,200,0,75,75,75);
-    TroopsIcon2.render( &TextTroopsIcon2,400,0,75,75,75);
-    TroopsIcon3.render( &TextTroopsIcon3,600,0,75,75,75);
+    TroopsIcon1.render( &TextTroopsIcon1,100,0,75,75,75);
+    TroopsIcon2.render( &TextTroopsIcon2,200,0,75,75,75);
+    TroopsIcon3.render( &TextTroopsIcon3,300,0,75,75,75);
     Ultimate.render(    &TextUltimate,1100,0,180,100,100);
 }
 void pre2()
@@ -938,10 +935,10 @@ void last2()
     Textplayergold.loadFromRenderedText( getgold,goldColor);
     Textplayergold.rendermenu(5,25);
 
-    TroopsIcon4.render( &TextTroop4,200,0,75,75,75);
-    TroopsIcon5.render( &TextTroop5,400,0,75,75,75);
-    TroopsIcon6.render( &TextTroop6,600,0,75,75,75);
-    TroopsIcon7.render( &TextTroop7,800,0,75,75,75);
+    TroopsIcon4.render( &TextTroop4,100,0,75,75,75);
+    TroopsIcon5.render( &TextTroop5,200,0,75,75,75);
+    TroopsIcon6.render( &TextTroop6,300,0,75,75,75);
+    TroopsIcon7.render( &TextTroop7,420,0,75,75,75);
 }
 
 bool paused=0,Lpaused=0;
@@ -965,7 +962,7 @@ int main(int argc,char** argv )
 {
     Engine::GetInstance()->Init();
     TTF_Init();
-//    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
+    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
     loadMedia();
     bool quit = false;
     SDL_Event e;
@@ -1000,15 +997,15 @@ int main(int argc,char** argv )
         if( trangthaitruoc == 0)
         {
             Texturebackground1.rendermenu(0,0);
-            StartA.render( &TextStA,490,200,375,90,90);
-            StartB.render( &TextStB,490,300,375,90,90);
-            StartC.render( &TextStC,490,400,375,90,90);
+            StartA.render( &TextStA,460,200,375,90,90);
+            StartB.render( &TextStB,460,300,375,90,90);
+            StartC.render( &TextStC,460,400,375,90,90);
         }
         if(trangthai == 1)
         {
             Texturebackground1.rendermenu(0,0);
-            NextA.render( &TextNxtA,490,200,375,90,90);
-            NextB.render( &TextNxtB,490,300,375,90,90);
+            NextA.render( &TextNxtA,460,200,375,90,90);
+            NextB.render( &TextNxtB,460,300,375,90,90);
         }
         if(trangthai == 2)
         {

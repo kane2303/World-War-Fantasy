@@ -7,20 +7,34 @@
 			<Cursor1 position="315" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="301" topLine="0" />
+			<Cursor1 position="14938" topLine="123" />
 		</Cursor>
-	</File>
-	<File name="src\Characters\Troops.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="171" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\graphic\Button.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="867" topLine="0" />
-		</Cursor>
+		<Folding>
+			<Collapse line="87" />
+			<Collapse line="98" />
+			<Collapse line="132" />
+			<Collapse line="151" />
+			<Collapse line="247" />
+			<Collapse line="278" />
+			<Collapse line="308" />
+			<Collapse line="333" />
+			<Collapse line="344" />
+			<Collapse line="353" />
+			<Collapse line="382" />
+			<Collapse line="391" />
+			<Collapse line="536" />
+			<Collapse line="561" />
+			<Collapse line="651" />
+			<Collapse line="671" />
+			<Collapse line="877" />
+			<Collapse line="892" />
+			<Collapse line="911" />
+			<Collapse line="925" />
+			<Collapse line="945" />
+			<Collapse line="953" />
+		</Folding>
 	</File>
 	<File name="src\graphic\Button.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
@@ -32,50 +46,24 @@
 			<Cursor1 position="1304" topLine="45" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="src\Core\Engine.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="34910" topLine="175" />
+			<Cursor1 position="301" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="50" />
-			<Collapse line="87" />
-			<Collapse line="98" />
-			<Collapse line="132" />
-			<Collapse line="152" />
-			<Collapse line="248" />
-			<Collapse line="279" />
-			<Collapse line="309" />
-			<Collapse line="334" />
-			<Collapse line="345" />
-			<Collapse line="354" />
-			<Collapse line="384" />
-			<Collapse line="394" />
-			<Collapse line="539" />
-			<Collapse line="564" />
-			<Collapse line="654" />
-			<Collapse line="674" />
-			<Collapse line="713" />
-			<Collapse line="756" />
-			<Collapse line="767" />
-			<Collapse line="779" />
-			<Collapse line="785" />
-			<Collapse line="880" />
-			<Collapse line="914" />
-			<Collapse line="948" />
-			<Collapse line="956" />
-			<Collapse line="1000" />
-			<Collapse line="1007" />
-			<Collapse line="1013" />
-			<Collapse line="1120" />
-			<Collapse line="1129" />
-			<Collapse line="1216" />
-			<Collapse line="1218" />
-			<Collapse line="1224" />
-		</Folding>
 	</File>
 	<File name="src\Core\Engine.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="579" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\graphic\Button.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="867" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Characters\Troops.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="171" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
