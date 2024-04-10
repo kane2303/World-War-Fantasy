@@ -44,12 +44,14 @@ int trangthai=0;
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 Mix_Music *gMusic = NULL;
+Mix_Chunk *gWin = NULL;
+Mix_Chunk *gLose = NULL;
 Dot dot;
 
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
-    gMusic = Mix_LoadMUS( "bibi.wav" );
+    gMusic = Mix_LoadMUS( "assets/music/bibi.wav" );
 
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
@@ -65,7 +67,7 @@ void loadMedia()
     TextNxtB.loadFromFile("assets/mainscreen/hardbutton.png");
 
     //doi 2
-    gFont = TTF_OpenFont( "dpcomic.ttf", 28 );
+    gFont = TTF_OpenFont( "assets/ttf/dpcomic.ttf", 28 );
     BG2.loadFromFile2("assets/bg2.png");
     BGframe.loadFromFile2("assets/BGframe.png");
     TextTroopsIcon1.loadFromFile2("assets/troopsicon1.png");
@@ -961,7 +963,7 @@ void Runend(LTexture &Choosen)
 
 int main(int argc,char** argv )
 {
-    Mix_OpenAudio( 84100, MIX_DEFAULT_FORMAT, 5, 4048 );
+    Mix_OpenAudio( 54100, MIX_DEFAULT_FORMAT, 2, 2048 );
     Engine::GetInstance()->Init();
     TTF_Init();
     loadMedia();
