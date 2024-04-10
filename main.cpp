@@ -17,7 +17,7 @@ LTexture Texturebutton;
 //bg
 LTexture Texturebackground1,Texturebackground2,Pausing;
 //Texture cua vat
-LTexture BG2,BG3,BGframe;
+LTexture BG2,BG3,BGframe,BGframe2;
 
 LTexture TextChange;
 
@@ -67,7 +67,7 @@ void loadMedia()
     //doi 2
     gFont = TTF_OpenFont( "dpcomic.ttf", 28 );
     BG2.loadFromFile2("assets/bg2.png");
-    BGframe.loadFromFile2("assets/BGframe2.png");
+    BGframe.loadFromFile2("assets/BGframe.png");
     TextTroopsIcon1.loadFromFile2("assets/troopsicon1.png");
     TextTroopsIcon2.loadFromFile2("assets/troopsicon2.png");
     TextTroopsIcon3.loadFromFile2("assets/troopsicon3.png");
@@ -77,6 +77,7 @@ void loadMedia()
 
     //doi 3
     BG3.loadFromFile("assets/background2.jpg");
+    BGframe2.loadFromFile2("assets/BGframe2.png");
     TextTroop4.loadFromFile2("assets/troopsicon4.png");
     TextTroop5.loadFromFile2("assets/troopsicon5.png");
     TextTroop6.loadFromFile2("assets/troopsicon6.png");
@@ -927,7 +928,7 @@ void last2()
     SDL_SetRenderTarget(gRenderer,nullptr);
     SDL_RenderClear(gRenderer);
     Texturebackground2.rendermenu(0,0,&camera);
-    BGframe.rendermenu(0,0);
+    BGframe2.rendermenu(0,0);
 
     SDL_Color goldColor= {255,215,0};
     string getgold= "$ ";
