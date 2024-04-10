@@ -54,11 +54,11 @@ void loadMedia()
     gMusic = Mix_LoadMUS( "assets/music/bibi.wav" );
 
     Texturebackground2.SetTexture();
-    Texturebackground1.loadFromFile("assets/background.jpg");
-    Pausing.loadFromFile("assets/pausingscreen.png");
-    Textwin.loadFromFile("assets/winning.png");
-    Textlose.loadFromFile("assets/losing.png");
-    TextChange.loadFromFile("assets/chuyencanh.png");
+    Texturebackground1.loadFromFile("assets/screen/background.jpg");
+    Pausing.loadFromFile("assets/screen/pausingscreen.png");
+    Textwin.loadFromFile("assets/screen/winning.png");
+    Textlose.loadFromFile("assets/screen/losing.png");
+    TextChange.loadFromFile("assets/screen/chuyencanh.png");
     TextStA.loadFromFile("assets/mainscreen/playbutton.png");
     TextStB.loadFromFile("assets/mainscreen/resumebutton.png");
     TextStC.loadFromFile("assets/mainscreen/quitbutton.png");
@@ -68,24 +68,24 @@ void loadMedia()
 
     //doi 2
     gFont = TTF_OpenFont( "assets/ttf/dpcomic.ttf", 28 );
-    BG2.loadFromFile2("assets/bg2.png");
-    BGframe.loadFromFile2("assets/BGframe.png");
-    TextTroopsIcon1.loadFromFile2("assets/troopsicon1.png");
-    TextTroopsIcon2.loadFromFile2("assets/troopsicon2.png");
-    TextTroopsIcon3.loadFromFile2("assets/troopsicon3.png");
-    TextCntbut.loadFromFile("assets/continuebutton.png");
-    TextQuitbut.loadFromFile("assets/quitbutton.png");
-    TextNwgbut.loadFromFile("assets/newgamebutton.png");
+    BG2.loadFromFile2("assets/screen/bg2.png");
+    BGframe.loadFromFile2("assets/button/BGframe.png");
+    TextTroopsIcon1.loadFromFile2("assets/button/troopsicon1.png");
+    TextTroopsIcon2.loadFromFile2("assets/button/troopsicon2.png");
+    TextTroopsIcon3.loadFromFile2("assets/button/troopsicon3.png");
+    TextCntbut.loadFromFile("assets/button/continuebutton.png");
+    TextQuitbut.loadFromFile("assets/button/quitbutton.png");
+    TextNwgbut.loadFromFile("assets/button/newgamebutton.png");
 
     //doi 3
-    BG3.loadFromFile("assets/background2.jpg");
-    BGframe2.loadFromFile2("assets/BGframe2.png");
-    TextTroop4.loadFromFile2("assets/troopsicon4.png");
-    TextTroop5.loadFromFile2("assets/troopsicon5.png");
-    TextTroop6.loadFromFile2("assets/troopsicon6.png");
-    TextTroop7.loadFromFile2("assets/bossicon.png");
+    BG3.loadFromFile("assets/screen/background2.jpg");
+    BGframe2.loadFromFile2("assets/button/BGframe2.png");
+    TextTroop4.loadFromFile2("assets/button/troopsicon4.png");
+    TextTroop5.loadFromFile2("assets/button/troopsicon5.png");
+    TextTroop6.loadFromFile2("assets/button/troopsicon6.png");
+    TextTroop7.loadFromFile2("assets/button/bossicon.png");
 
-    TextUltimate.loadFromFile("assets/ulti.png");
+    TextUltimate.loadFromFile("assets/button/ulti.png");
 }
 void Run_dot()
 {
