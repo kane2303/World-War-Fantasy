@@ -66,8 +66,8 @@ void loadMedia()
 
     //doi 2
     gFont = TTF_OpenFont( "dpcomic.ttf", 28 );
-    BG2.loadFromFile("assets/bg2.png");
-    BGframe.loadFromFile("assets/BGframe2.png");
+    BG2.loadFromFile2("assets/bg2.png");
+    BGframe.loadFromFile2("assets/BGframe2.png");
     TextTroopsIcon1.loadFromFile2("assets/troopsicon1.png");
     TextTroopsIcon2.loadFromFile2("assets/troopsicon2.png");
     TextTroopsIcon3.loadFromFile2("assets/troopsicon3.png");
@@ -903,13 +903,13 @@ void last1()
     string getgold= "$ ";
     getgold+=to_string(playergold);
     Textplayergold.loadFromRenderedText( getgold,goldColor);
-    Textplayergold.rendermenu(5,40);
+    Textplayergold.rendermenu(5,25);
 
 
-    TroopsIcon1.render( &TextTroopsIcon1,200,0,120,120,120);
-    TroopsIcon2.render( &TextTroopsIcon2,400,0,120,120,120);
-    TroopsIcon3.render( &TextTroopsIcon3,600,0,120,120,120);
-    Ultimate.render(    &TextUltimate,1010,0,270,150,150);
+    TroopsIcon1.render( &TextTroopsIcon1,200,0,75,75,75);
+    TroopsIcon2.render( &TextTroopsIcon2,400,0,75,75,75);
+    TroopsIcon3.render( &TextTroopsIcon3,600,0,75,75,75);
+    Ultimate.render(    &TextUltimate,1100,0,180,100,100);
 }
 void pre2()
 {
@@ -936,12 +936,12 @@ void last2()
     string getgold= "$ ";
     getgold+=to_string(playergold);
     Textplayergold.loadFromRenderedText( getgold,goldColor);
-    Textplayergold.rendermenu(5,40);
+    Textplayergold.rendermenu(5,25);
 
-    TroopsIcon4.render( &TextTroop4,200,0,120,120,120);
-    TroopsIcon5.render( &TextTroop5,400,0,120,120,120);
-    TroopsIcon6.render( &TextTroop6,600,0,120,120,120);
-    TroopsIcon7.render( &TextTroop7,800,0,120,120,120);
+    TroopsIcon4.render( &TextTroop4,200,0,75,75,75);
+    TroopsIcon5.render( &TextTroop5,400,0,75,75,75);
+    TroopsIcon6.render( &TextTroop6,600,0,75,75,75);
+    TroopsIcon7.render( &TextTroop7,800,0,75,75,75);
 }
 
 bool paused=0,Lpaused=0;
@@ -992,7 +992,7 @@ int main(int argc,char** argv )
                 if( NextA.handleEvent(&e) || NextB.handleEvent(&e) )
                 {
                     if(NextB.handleEvent(&e)) chedokho=1;
-                    trangthai = 2;
+                    trangthai = 3;
                 }
             }
         }
@@ -1017,6 +1017,7 @@ int main(int argc,char** argv )
             ///vòng lặp chính đời 2
             bool quit2 = 0;
             int alpha=-300;
+            EndGame=0;
             while(!quit2)
             {
                 if(quit) break;
