@@ -49,7 +49,7 @@ Dot dot;
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
-//    gMusic = Mix_LoadMUS( "nen.wav" );
+    gMusic = Mix_LoadMUS( "bibi.wav" );
 
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/background.jpg");
@@ -961,13 +961,13 @@ void Runend(LTexture &Choosen)
 
 int main(int argc,char** argv )
 {
+    Mix_OpenAudio( 84100, MIX_DEFAULT_FORMAT, 5, 4048 );
     Engine::GetInstance()->Init();
     TTF_Init();
-    Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
     loadMedia();
+    Mix_PlayMusic( gMusic, -1 );
     bool quit = false;
     SDL_Event e;
-    Mix_PlayMusic( gMusic, -1 );
     while( !quit )
     {
 
