@@ -19,6 +19,8 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 ### Control
 - Game được thao tác chủ yếu bằng chuột
 - Bấm P để mở menu Pause khi đang chơi game
+- Nút mũi tên trái để di chuyển màn hình map sang trái
+- Nút mũi tên phải để di chuyển màn hình map sang phải
 
 ### Nội dung game
 Game gồm có 2 đời và bạn sẽ dành chiến thắng khi phá hủy được nhà chính đối phương ở đời 2. Bên cạnh đó, bạn sẽ thua cuộc khi máu của nhà chính của mình tụt xuống 0 ở bất kỳ đời nào.
