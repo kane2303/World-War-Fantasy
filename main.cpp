@@ -992,7 +992,7 @@ int main(int argc,char** argv )
                 if( NextA.handleEvent(&e) || NextB.handleEvent(&e) )
                 {
                     if(NextB.handleEvent(&e)) chedokho=1;
-                    trangthai = 3;
+                    trangthai = 2;
                 }
             }
         }
