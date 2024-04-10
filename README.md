@@ -1,1 +1,71 @@
+
 # World War Fantasy
+
+
+
+## Giới thiệu
+- Họ và tên: Trần Huy Thịnh & Đầu Hồng Quang
+- MSSV: 23020162 & 23020135
+- C-D K68, Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội (UET-VNU)
+    
+World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ giữa 2 đế quốc tại một thế giới kỳ ảo. Bạn có thể đóng vai trò như một vị quân vương hay một vị tướng lĩnh tài ba để lãnh đạo quân đội đến chiến thắng. Hãy cân nhắc kỹ lưỡng và sử dụng vàng một cách hợp lý vì bạn sẽ không muốn phải ngồi đợi vàng hồi lại trong khi quân địch đang tấn công nhà bạn đâu :>
+## Hướng dẫn tải và chạy game
+- Bước 1: Bấm vào phần "Code" màu xanh lá ở trên rồi bấm "Download ZIP" ở dưới cùng để tải game
+- Bước 2: Extract file zip vừa tải về
+- Bước 3: Sử dụng CodeBlocks để mở file Game.cbp
+- Bước 4: Bấm F9 và bạn đã có thể ngay lập tức chơi tựa game này :>
+## Chi tiết về game
+
+### Nội dung game
+Game gồm có 2 đời và bạn sẽ dành chiến thắng khi phá hủy được nhà chính đối phương ở đời 2. Bên cạnh đó, bạn sẽ thua cuộc khi máu của nhà chính của mình tụt xuống 0 ở bất kỳ đời nào.
+
+Game có 2 chế độ Easy và Hard. Nếu cảm thấy chế độ Easy quá đơn giản, hãy thử thách bản thân mình với chế độ Hard nhé!!! Nó thực sự rất khó khăn đấy.
+#### Stage 1 - Underwater
+Ở đời này bạn sẽ có 3 loại binh chủng và một loại phép thuật gọi sấm sét để tấn công đa kẻ thù
+- Binh chủng bộ binh - Aqua Infantry: Lượng máu dày và khả năng khắc chế ma thuật
+- Binh chủng pháp sư - Aqua Witch: Khả năng tấn công từ xa và khắc chế cảm tử
+- Binh chủng cảm tử - Explosive Fish: One-hit mọi đối thủ nhưng dễ bị phù thủy tiêu diệt từ xa
+- Phép thuật: Triệu hồi tối đa 5 tia sét tấn công kẻ thù.
+#### Stage 2 - Beach
+Sau khi phòng thủ thành công một thời gian ở đời 1 hoặc tự tay phá hủy nhà chính đối phương, bạn sẽ được tự động chuyển sang đời 2. 
+
+Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủng giúp bạn dễ dàng kết thúc trò chơi bằng một chiến thắng.
+- Binh chủng bộ binh - Heavy Boxer: Khả năng phòng thủ tốt và thích hợp để chống lại cung thủ
+- Binh chủng cung thủ - Samurai Archer: Khả năng tấn công từ xa và phù hợp để tiêu diệt binh chủng giáo
+- Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh 
+- Binh chủng siêu cấp - Ultimate Mage: Sức mạnh và sức bền áp đảo mọi binh chủng khác
+
+### Khắc chế binh chủng
+Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại cơ chế critical hit để khắc chế lẫn nhau. Hãy tận dụng tốt cơ chế này để có chiến thuật tốt hơn
+### Control
+- Game được thao tác chủ yếu bằng chuột
+- Bấm P để mở menu Pause khi đang chơi game
+
+## Các kỹ thuật lập trình đã sử dụng
+- Vòng lặp
+- Mảng tĩnh
+- Xâu
+- Vector, con trỏ
+- Xuất/nhập file
+- Xử lý va chạm
+- Xử lý các trường hợp tương tác giữa các binh chủng
+- Thuật toán tham lam
+- Hàng đợi ưu tiên và thuật toán Dijkstra
+- SDL2 (SLD2_image, SDL2_mixer, SLD2_ttf)
+- Kỹ thuật sử dụng hoạt ảnh (Sprites)
+- Kỹ thuật hit-box, Alpha changing
+- Kỹ thuật Scrolling View
+- AI enemy
+
+
+
+## Kết luận
+- Hình ảnh và âm thanh được tham khảo từ nhiều nguồn khác nhau và được chỉnh sửa để phù hợp với game, nhưng đa số được tham khảo từ: [itch.io](https://itch.io/game-assets/free)
+- Một số ứng dụng, trang web hỗ trợ làm đồ họa: Microsoft Paint, [Canva](https://www.canva.com/vi_vn/), [Aseprite](https://www.aseprite.org/), [Photoroom](https://www.photoroom.com/), [RGBA Color Picker](https://rgbacolorpicker.com/), [Coolors](https://coolors.co/)
+- Hiểu cách thức hoạt động và tự viết một game.
+- Biết cách quản lý code cho những chương trình lớn, tìm và xử lý các lỗi ẩn.
+- Sử dụng tốt ngôn ngữ lập trình C++ và các thư viện SDL2 để làm nên một game.
+- Kỹ năng phân công và làm việc nhóm sao cho hiệu quả và kỹ năng làm việc độc lập tốt.
+- Chia nhỏ một project lớn thành những file nhỏ, những file nhỏ thành những class nhỏ hơn để thuận tiện cho quá trình code, quản lý và debug.
+- Quan trọng nhất: Có đam mê và tự tạo động lực để có thể làm những project lớn và khó hơn nữa.
+    
