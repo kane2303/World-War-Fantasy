@@ -231,7 +231,7 @@ void close()
 
 int binhchungs[]=  {-1,   1,    2,    3,    1,    2,    3,    4,     4,     4   };
 int HPs[] =        {-1,   150,  100,  50,   200,  200,  200,  2000,  1500,  3000};
-int dames[] =      {-1,   34,   20,   300,  50,   40,   50,   300,   0,     0   };
+int dames[] =      {-1,   34,   20,   300,  50,   25,   50,   300,   0,     0   };
 int SPDatks[] =    {-1,   24,   24,   24,   24,   24,   24,   24,    0,     0   };
 int ranges[] =     {-1,   5,    190,  5,    15,   220,  15,   15,    0,     0   };
 int SPDs[] =       {-1,   2,    2,    3,    2,    2,    2,    3,     0,     0   };
@@ -496,9 +496,9 @@ void WorkBase(Troop &doituong) {
 void tancong(Troop &attacker, Troop &defender) {
     int satthuong=attacker.dame;
     if(attacker.binhchung == 1 && defender.binhchung == 2) satthuong*=2;
-    if(attacker.binhchung == 2 && defender.binhchung == 3) satthuong*=2;
+    if(attacker.binhchung == 2 && defender.binhchung == 3) satthuong*=3;
     if(attacker.binhchung == 3 && defender.binhchung == 1) satthuong*=2;
-    if(attacker.id == 2 && defender.id == 3) satthuong= satthuong/2*3;
+    if(attacker.id == 2 && defender.id == 3) satthuong= satthuong/3*4;
 
     defender.HP -= satthuong;
 }
