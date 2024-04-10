@@ -16,10 +16,18 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 - Bước 4: Bấm F9 và bạn đã có thể ngay lập tức chơi tựa game này :>
 ## Chi tiết về game
 
+### Control
+- Game được thao tác chủ yếu bằng chuột
+- Bấm P để mở menu Pause khi đang chơi game
+
 ### Nội dung game
 Game gồm có 2 đời và bạn sẽ dành chiến thắng khi phá hủy được nhà chính đối phương ở đời 2. Bên cạnh đó, bạn sẽ thua cuộc khi máu của nhà chính của mình tụt xuống 0 ở bất kỳ đời nào.
 
 Game có 2 chế độ Easy và Hard. Nếu cảm thấy chế độ Easy quá đơn giản, hãy thử thách bản thân mình với chế độ Hard nhé!!! Nó thực sự rất khó khăn đấy.
+
+### Khắc chế binh chủng
+Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại cơ chế critical hit để khắc chế lẫn nhau. Hãy tận dụng tốt cơ chế này để có chiến thuật tốt hơn
+
 #### Stage 1 - Underwater
 Ở đời này bạn sẽ có 3 loại binh chủng và một loại phép thuật gọi sấm sét để tấn công đa kẻ thù
 - Binh chủng bộ binh - Aqua Infantry: Lượng máu dày và khả năng khắc chế ma thuật
@@ -35,12 +43,6 @@ Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủn
 - Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh 
 - Binh chủng siêu cấp - Ultimate Mage: Sức mạnh và sức bền áp đảo mọi binh chủng khác
 
-### Khắc chế binh chủng
-Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại cơ chế critical hit để khắc chế lẫn nhau. Hãy tận dụng tốt cơ chế này để có chiến thuật tốt hơn
-### Control
-- Game được thao tác chủ yếu bằng chuột
-- Bấm P để mở menu Pause khi đang chơi game
-
 ## Các kỹ thuật lập trình đã sử dụng
 - Vòng lặp
 - Mảng tĩnh
@@ -52,10 +54,12 @@ Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại c
 - Thuật toán tham lam
 - Hàng đợi ưu tiên và thuật toán Dijkstra
 - SDL2 (SLD2_image, SDL2_mixer, SLD2_ttf)
+- Kỹ thuật Texture font, Mouse event, Key event
 - Kỹ thuật sử dụng hoạt ảnh (Sprites)
 - Kỹ thuật hit-box, Alpha changing
 - Kỹ thuật Scrolling View
 - AI enemy
+
 
 
 
