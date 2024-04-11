@@ -30,13 +30,13 @@ Game có 2 chế độ Easy và Hard. Nếu cảm thấy chế độ Easy quá �
 ### Khắc chế binh chủng
 Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại cơ chế critical hit để khắc chế lẫn nhau. Hãy tận dụng tốt cơ chế này để có chiến thuật tốt hơn
 
-#### Stage 1 - Underwater
+### Stage 1 - Underwater
 Ở đời này bạn sẽ có 3 loại binh chủng và một loại phép thuật gọi sấm sét để tấn công đa kẻ thù
 - Binh chủng bộ binh - Aqua Infantry: Lượng máu dày và khả năng khắc chế ma thuật
 - Binh chủng pháp sư - Aqua Witch: Khả năng tấn công từ xa và khắc chế cảm tử
 - Binh chủng cảm tử - Explosive Fish: One-hit mọi đối thủ nhưng dễ bị phù thủy tiêu diệt từ xa
 - Phép thuật: Triệu hồi tối đa 5 tia sét tấn công kẻ thù.
-#### Stage 2 - Beach
+### Stage 2 - Beach
 Sau khi phòng thủ thành công một thời gian ở đời 1 hoặc tự tay phá hủy nhà chính đối phương, bạn sẽ được tự động chuyển sang đời 2. 
 
 Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủng giúp bạn dễ dàng kết thúc trò chơi bằng một chiến thắng.
