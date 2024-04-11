@@ -75,7 +75,7 @@ Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủn
 - Kỹ thuật Scrolling View
 - AI enemy
 
-
+#### Tụi em cảm thấy game tụi em xứng đáng ở ngưỡng điểm 10% ạ :3
 
 
 ## Kết luận
