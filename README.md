@@ -70,6 +70,7 @@ Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủn
 - SDL2 (SLD2_image, SDL2_mixer, SLD2_ttf)
 - Kỹ thuật Texture font, Mouse event, Key event
 - Kỹ thuật sử dụng hoạt ảnh (Sprites)
+- Sound Effects and Music
 - Kỹ thuật hit-box, Alpha changing
 - Kỹ thuật Scrolling View
 - AI enemy
