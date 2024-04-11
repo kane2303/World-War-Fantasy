@@ -12,7 +12,7 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 ## Hướng dẫn tải và chạy game
 - Bước 1: Bấm vào phần "Code" màu xanh lá ở trên rồi bấm "Download ZIP" ở dưới cùng để tải game
 - Bước 2: Extract file zip vừa tải về
-- Bước 3: Sử dụng CodeBlocks để mở file Game.cbp
+- Bước 3: Sử dụng CodeBlocks để mở file project Game.cbp
 - Bước 4: Bấm F9 và bạn đã có thể ngay lập tức chơi tựa game này :>
 ## Chi tiết về game
 
