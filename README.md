@@ -25,6 +25,11 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 ### Nội dung game
 Game gồm có 2 đời và bạn sẽ dành chiến thắng khi phá hủy được nhà chính đối phương ở đời 2. Bên cạnh đó, bạn sẽ thua cuộc khi máu của nhà chính của mình tụt xuống 0 ở bất kỳ đời nào.
 
+![Base2](https://github.com/kane2303/Knight/assets/144300123/605a5c05-907d-47e7-9a53-bffec1c4ed5a)
+
+![Base3](https://github.com/kane2303/Knight/assets/144300123/fc91f033-d23d-45d5-a3e2-9cebb564ab64)
+
+
 Game có 2 chế độ Easy và Hard. Nếu cảm thấy chế độ Easy quá đơn giản, hãy thử thách bản thân mình với chế độ Hard nhé!!! Nó thực sự rất khó khăn đấy.
 
 ### Khắc chế binh chủng
