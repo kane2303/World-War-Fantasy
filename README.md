@@ -33,12 +33,15 @@ Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại c
 ### Stage 1 - Underwater
 Ở đời này bạn sẽ có 3 loại binh chủng và một loại phép thuật gọi sấm sét để tấn công đa kẻ thù
 - Binh chủng bộ binh - Aqua Infantry: Lượng máu dày và khả năng khắc chế ma thuật
+  
 ![1 gif](https://github.com/kane2303/Knight/assets/144300123/650777ef-d4ed-49bb-b4f5-144be6f6fd1b)
 
 - Binh chủng pháp sư - Aqua Witch: Khả năng tấn công từ xa và khắc chế cảm tử
+  
 ![2 gif](https://github.com/kane2303/Knight/assets/144300123/b6542707-d09c-4f9a-9bf5-f22fcf0f65a4)
 
 - Binh chủng cảm tử - Explosive Fish: One-hit mọi đối thủ nhưng dễ bị phù thủy tiêu diệt từ xa
+
 ![3 gif](https://github.com/kane2303/Knight/assets/144300123/c914a68b-ea00-4df9-9530-51780ab9178c)
 
 - Phép thuật: Triệu hồi tối đa 5 tia sét tấn công kẻ thù.
@@ -47,15 +50,19 @@ Sau khi phòng thủ thành công một thời gian ở đời 1 hoặc tự tay
 
 Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủng giúp bạn dễ dàng kết thúc trò chơi bằng một chiến thắng.
 - Binh chủng bộ binh - Heavy Boxer: Khả năng phòng thủ tốt và thích hợp để chống lại cung thủ
+
 ![4 gif](https://github.com/kane2303/Knight/assets/144300123/78848b50-ac88-4bcb-ac3f-0d9bceb6e7cd)
 
 - Binh chủng cung thủ - Samurai Archer: Khả năng tấn công từ xa và phù hợp để tiêu diệt binh chủng giáo
+
 ![5 gif](https://github.com/kane2303/Knight/assets/144300123/aa4ec7cf-761e-497e-acba-ece50944d4a6)
 
-- Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh 
+- Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh
+  
 ![6 gif](https://github.com/kane2303/Knight/assets/144300123/0780a230-d13d-4b15-888d-0fcc323e39a7)
 
 - Binh chủng siêu cấp - Ultimate Mage: Sức mạnh và sức bền áp đảo mọi binh chủng khác
+  
 ![7 gif](https://github.com/kane2303/Knight/assets/144300123/1e30795d-0479-4eb7-9e2b-41b4006d34a5)
 
 ### Một số hình ảnh trong game
