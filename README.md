@@ -47,6 +47,8 @@ Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại c
 - Phép thuật: Triệu hồi tối đa 5 tia sét tấn công kẻ thù.
 
 ![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
 
 ### Stage 2 - Beach
 Sau khi phòng thủ thành công một thời gian ở đời 1 hoặc tự tay phá hủy nhà chính đối phương, bạn sẽ được tự động chuyển sang đời 2. 
