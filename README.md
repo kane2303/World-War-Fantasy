@@ -12,7 +12,7 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 ## Hướng dẫn tải và chạy game
 - Bước 1: Bấm vào phần "Code" màu xanh lá ở trên rồi bấm "Download ZIP" ở dưới cùng để tải game
 - Bước 2: Extract file zip vừa tải về
-- Bước 3: Sử dụng CodeBlocks để mở file Game.cbp
+- Bước 3: Sử dụng CodeBlocks để mở file project Game.cbp
 - Bước 4: Bấm F9 và bạn đã có thể ngay lập tức chơi tựa game này :>
 ## Chi tiết về game
 
@@ -25,25 +25,57 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 ### Nội dung game
 Game gồm có 2 đời và bạn sẽ dành chiến thắng khi phá hủy được nhà chính đối phương ở đời 2. Bên cạnh đó, bạn sẽ thua cuộc khi máu của nhà chính của mình tụt xuống 0 ở bất kỳ đời nào.
 
+![Base2](https://github.com/kane2303/Knight/assets/144300123/605a5c05-907d-47e7-9a53-bffec1c4ed5a)
+
+![Base3](https://github.com/kane2303/Knight/assets/144300123/fc91f033-d23d-45d5-a3e2-9cebb564ab64)
+
+
 Game có 2 chế độ Easy và Hard. Nếu cảm thấy chế độ Easy quá đơn giản, hãy thử thách bản thân mình với chế độ Hard nhé!!! Nó thực sự rất khó khăn đấy.
 
 ### Khắc chế binh chủng
 Mỗi đời đều có 3 binh chủng cơ bản và giữa chúng tồn tại cơ chế critical hit để khắc chế lẫn nhau. Hãy tận dụng tốt cơ chế này để có chiến thuật tốt hơn
 
-#### Stage 1 - Underwater
+### Stage 1 - Underwater
 Ở đời này bạn sẽ có 3 loại binh chủng và một loại phép thuật gọi sấm sét để tấn công đa kẻ thù
 - Binh chủng bộ binh - Aqua Infantry: Lượng máu dày và khả năng khắc chế ma thuật
+  
+![1 gif](https://github.com/kane2303/Knight/assets/144300123/650777ef-d4ed-49bb-b4f5-144be6f6fd1b)
+
 - Binh chủng pháp sư - Aqua Witch: Khả năng tấn công từ xa và khắc chế cảm tử
+  
+![2 gif](https://github.com/kane2303/Knight/assets/144300123/b6542707-d09c-4f9a-9bf5-f22fcf0f65a4)
+
 - Binh chủng cảm tử - Explosive Fish: One-hit mọi đối thủ nhưng dễ bị phù thủy tiêu diệt từ xa
+
+![3 gif](https://github.com/kane2303/Knight/assets/144300123/c914a68b-ea00-4df9-9530-51780ab9178c)
+
 - Phép thuật: Triệu hồi tối đa 5 tia sét tấn công kẻ thù.
-#### Stage 2 - Beach
+
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+![thunder gif](https://github.com/kane2303/Knight/assets/144300123/665115a1-cf2a-4621-9bb4-65fda5dfaa90)
+
+### Stage 2 - Beach
 Sau khi phòng thủ thành công một thời gian ở đời 1 hoặc tự tay phá hủy nhà chính đối phương, bạn sẽ được tự động chuyển sang đời 2. 
 
 Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủng giúp bạn dễ dàng kết thúc trò chơi bằng một chiến thắng.
 - Binh chủng bộ binh - Heavy Boxer: Khả năng phòng thủ tốt và thích hợp để chống lại cung thủ
+
+![4 gif](https://github.com/kane2303/Knight/assets/144300123/78848b50-ac88-4bcb-ac3f-0d9bceb6e7cd)
+
 - Binh chủng cung thủ - Samurai Archer: Khả năng tấn công từ xa và phù hợp để tiêu diệt binh chủng giáo
-- Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh 
+
+![5 gif](https://github.com/kane2303/Knight/assets/144300123/aa4ec7cf-761e-497e-acba-ece50944d4a6)
+
+- Binh chủng giáo binh - Spike Knight: Sát thương cao và khả năng xuyên giáp đối với binh chủng bộ binh
+  
+![6 gif](https://github.com/kane2303/Knight/assets/144300123/0780a230-d13d-4b15-888d-0fcc323e39a7)
+
 - Binh chủng siêu cấp - Ultimate Mage: Sức mạnh và sức bền áp đảo mọi binh chủng khác
+  
+![7 gif](https://github.com/kane2303/Knight/assets/144300123/1e30795d-0479-4eb7-9e2b-41b4006d34a5)
 
 ### Một số hình ảnh trong game
 ![image](https://github.com/kane2303/Knight/assets/144300123/8b1087ce-1578-4445-a78c-597b204a0822)
@@ -70,11 +102,12 @@ Lúc này bạn sẽ có tận 4 loại binh chủng bao gồm siêu binh chủn
 - SDL2 (SLD2_image, SDL2_mixer, SLD2_ttf)
 - Kỹ thuật Texture font, Mouse event, Key event
 - Kỹ thuật sử dụng hoạt ảnh (Sprites)
+- Sound Effects and Music
 - Kỹ thuật hit-box, Alpha changing
 - Kỹ thuật Scrolling View
 - AI enemy
 
-
+#### Tụi em cảm thấy game tụi em xứng đáng ở ngưỡng điểm top 10% lớp ạ :3
 
 
 ## Kết luận
