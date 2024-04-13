@@ -51,7 +51,8 @@ Dot dot;
 TTF_Font* gFont = NULL;
 void loadMedia()
 {
-    gMusic = Mix_LoadMUS( "assets/music/bibi.wav" );
+    gMusic = Mix_LoadMUS( "assets/music/nen2.wav" );
+//    gWin = Mix_Loa
 
     Texturebackground2.SetTexture();
     Texturebackground1.loadFromFile("assets/screen/background.jpg");
