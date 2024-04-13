@@ -16,6 +16,9 @@ World War Fantasy kể về một cuộc giải chiến xuyên thiên niên kỷ
 - Bước 4: Bấm F9 và bạn đã có thể ngay lập tức chơi tựa game này :>
 ## Chi tiết về game
 
+### Gameplay
+Xem thử gameplay của trò chơi [tại đây](https://youtu.be/MRci9rBGBGw?si=RleuBNCWqaxi_C2O)
+
 ### Control
 - Game được thao tác chủ yếu bằng chuột
 - Bấm P để mở menu Pause khi đang chơi game
