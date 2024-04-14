@@ -63,7 +63,6 @@ bool LTexture::loadFromFile( string path )
 		SDL_FreeSurface( loadedSurface );
 	}
 
-	//Return success
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
@@ -97,7 +96,6 @@ bool LTexture::loadFromFile2( string path )
 		SDL_FreeSurface( loadedSurface );
 	}
 
-	//Return success
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
@@ -118,10 +116,8 @@ void LTexture::rendermenu( int x, int y, SDL_Rect* clip, bool flip){
 	}
 }
 void LTexture::render( int x, int y, SDL_Rect* clip, bool flip, bool hero){
-	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
-	//Set clip rendering dimensions
 	if( clip != NULL )
 	{
 		renderQuad.w = clip->w;
@@ -131,7 +127,6 @@ void LTexture::render( int x, int y, SDL_Rect* clip, bool flip, bool hero){
     if(hero) renderQuad.y= 720 - renderQuad.h;
     else renderQuad.y= 700 - renderQuad.h;
 
-	//Render to screen
 	if(!flip) SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 	else {
 	    SDL_RendererFlip flipType= SDL_FLIP_HORIZONTAL;
@@ -155,6 +150,5 @@ void LTexture::SetRender()
 
 void LTexture::setAlpha( Uint8 alpha )
 {
-	//Modulate texture alpha
 	SDL_SetTextureAlphaMod( mTexture, alpha );
 }

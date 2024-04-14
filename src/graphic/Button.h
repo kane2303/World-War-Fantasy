@@ -41,4 +41,4 @@ private:
     int mPosX, mPosY;
     int mVelX, mVelY;
 };
-#endif // BUTTON_H
+#endif

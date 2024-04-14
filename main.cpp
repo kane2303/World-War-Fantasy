@@ -23,20 +23,20 @@ LTexture TextChange;
 
 void loadMedia();
 
-LButton StartA,StartB,StartC;
-LTexture TextStA,TextStB,TextStC;
+LButton StartA,StartB,StartC,StartD;
+LTexture TextStA,TextStB,TextStC,TextStD;
 
 LButton NextA,NextB;
-LTexture TextNxtA,TextNxtB;
+LTexture TextNxtA,TextNxtB,TextNxtC;
 
 LButton TroopsIcon1,TroopsIcon2,TroopsIcon3;
 LTexture TextTroopsIcon1,TextTroopsIcon2,TextTroopsIcon3,Textplayergold,Textbootcamp,Textbootcamp2;
 
 LButton Cntbut,Quitbut,Nwgbut;
-LTexture TextCntbut,TextQuitbut,TextNwgbut,Textwin,Textlose;
+LTexture TextCntbut,TextQuitbut,TextNwgbut,Textwin,Textlose,TextRecord;
 
 LButton TroopsIcon4,TroopsIcon5,TroopsIcon6,TroopsIcon7;
-LTexture TextTroop4,TextTroop5,TextTroop6,TextTroop7;
+LTexture TextTroop4,TextTroop5,TextTroop6,TextTroop7,Textplayertime;
 
 LButton Ultimate;
 LTexture TextUltimate;
@@ -49,6 +49,7 @@ Mix_Chunk *gLose = NULL;
 Dot dot;
 
 TTF_Font* gFont = NULL;
+TTF_Font* gFontRecord = NULL;
 void loadMedia()
 {
     gMusic = Mix_LoadMUS( "assets/music/nen2.wav" );
@@ -63,12 +64,14 @@ void loadMedia()
     TextStA.loadFromFile("assets/mainscreen/playbutton.png");
     TextStB.loadFromFile("assets/mainscreen/resumebutton.png");
     TextStC.loadFromFile("assets/mainscreen/quitbutton.png");
-
+    TextStD.loadFromFile("assets/mainscreen/scorebutton.png");
+    TextNxtC.loadFromFile("assets/screen/score.png");
     TextNxtA.loadFromFile("assets/mainscreen/easybutton.png");
     TextNxtB.loadFromFile("assets/mainscreen/hardbutton.png");
 
     //doi 2
     gFont = TTF_OpenFont( "assets/ttf/dpcomic.ttf", 28 );
+    gFontRecord = TTF_OpenFont( "assets/ttf/recordttf.ttf", 70 );
     BG2.loadFromFile2("assets/screen/bg2.png");
     BGframe.loadFromFile2("assets/button/BGframe.png");
     TextTroopsIcon1.loadFromFile2("assets/button/troopsicon1.png");
@@ -365,6 +368,10 @@ void WorkBase(Troop &doituong) {
             if(doituong.phe) EndGame = 2;
             else EndGame=-1;
         }
+    }
+    if(frame == 27000) {
+        if(trangthai == 2) EndGame = 1;
+        if(trangthai == 3) EndGame = 2;
     }
     string path=taolink(doituong.id, "Base");
     if(!doituong.Textt.loadFromFile(path.c_str())) {
@@ -878,6 +885,19 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 
+int thoigian=0;
+string record(int cnt)
+{
+    int mi=cnt/3600;
+    int se=(cnt-mi*3600)/60;
+    string s;
+    if(mi<10) s="0"+to_string(mi);
+    else s=to_string(mi);
+    s+=":";
+    if(se<10) s+=("0"+to_string(se));
+    else s+=to_string(se);
+    return s;
+}
 void pre1()
 {
     SDL_RenderClear(gRenderer);
@@ -904,8 +924,9 @@ void last1()
     string getgold= "$ ";
     getgold+=to_string(playergold);
     Textplayergold.loadFromRenderedText( getgold,goldColor);
-    Textplayergold.rendermenu(5,25);
-
+    Textplayergold.rendermenu(5,15);
+    Textplayertime.loadFromRenderedText( record(thoigian),goldColor );
+    Textplayertime.rendermenu(5,40);
 
     TroopsIcon1.render( &TextTroopsIcon1,100,0,75,75,75);
     TroopsIcon2.render( &TextTroopsIcon2,200,0,75,75,75);
@@ -944,7 +965,18 @@ void last2()
     TroopsIcon6.render( &TextTroop6,300,0,75,75,75);
     TroopsIcon7.render( &TextTroop7,420,0,75,75,75);
 }
-
+void saverecord()
+{
+    ofstream out("record.txt");
+    ifstream in("record.txt");
+    vector<string> ss;
+    string s;
+    while(getline(in,s)){
+        ss.push_back(s);
+    }
+    for(auto x:ss) out<<x<<"\n";
+    out<<record(thoigian);
+}
 bool paused=0,Lpaused=0;
 void Runpause()
 {
@@ -961,7 +993,24 @@ void Runend(LTexture &Choosen)
     Quitbut.render( &TextQuitbut,400,500,500,100,100);
     Nwgbut.render( &TextNwgbut,400,400,500,100,100);
 }
-
+void PrintRecord()
+{
+    SDL_RenderClear(gRenderer);
+    TextNxtC.rendermenu(0,0);
+    SDL_Color goldColor= {255,215,0};
+    ifstream in("record.txt");
+    string s;
+    TTF_SetFontSize(gFont,70);
+    int pos=200;
+    while(getline(in,s))
+    {
+        TextRecord.loadFromRenderedText(s,goldColor);
+        TextRecord.rendermenu(560,pos);
+        if(pos<720)pos+=90;
+        else break;
+    }
+    TTF_SetFontSize(gFont,28);
+}
 int main(int argc,char** argv )
 {
     Mix_OpenAudio( 54100, MIX_DEFAULT_FORMAT, 2, 2048 );
@@ -986,6 +1035,7 @@ int main(int argc,char** argv )
             {
                 if(StartA.handleEvent(&e)) trangthai = 1;
                 if(StartB.handleEvent(&e)) {LoadData();}
+                if(StartD.handleEvent(&e)) trangthai=4;
                 if(StartC.handleEvent(&e)) quit = 1;
             }
             else if( trangthai == 1 )
@@ -997,13 +1047,17 @@ int main(int argc,char** argv )
                 }
             }
         }
-
+        if(trangthai==4)
+        {
+            PrintRecord();
+        }
         if( trangthaitruoc == 0)
         {
             Texturebackground1.rendermenu(0,0);
             StartA.render( &TextStA,460,200,375,90,90);
             StartB.render( &TextStB,460,300,375,90,90);
-            StartC.render( &TextStC,460,400,375,90,90);
+            StartD.render( &TextStD,460,400,375,90,90);
+            StartC.render( &TextStC,460,500,375,90,90);
         }
         if(trangthai == 1)
         {
@@ -1023,7 +1077,6 @@ int main(int argc,char** argv )
             {
                 if(quit) break;
                 int calling=0;
-
                 while( SDL_PollEvent( &e ) != 0 )
                 {
                     if(EndGame == -1)
@@ -1032,6 +1085,7 @@ int main(int argc,char** argv )
                         if(Nwgbut.handleEvent(&e))  {
                             ClearData();
                             LoadNewData();
+                            thoigian=0;
                             calling=0;
                             paused=0;
                             quit2=1;
@@ -1049,6 +1103,7 @@ int main(int argc,char** argv )
                         if(Nwgbut.handleEvent(&e)) {
                             ClearData();
                             LoadNewData();
+                            thoigian=0;
                             calling=0;
                             paused=0;
                             quit2=1;
@@ -1093,7 +1148,7 @@ int main(int argc,char** argv )
                 }
                 else if(!paused && !quit2){
                     pre1();
-
+                    thoigian++;
                     AImove(chedokho, trangthai);
                     if(calling != 0) {
                         if(calling!=4)CreateTroop(calling,0);
@@ -1145,6 +1200,7 @@ int main(int argc,char** argv )
                         if(Nwgbut.handleEvent(&e)) {
                             ClearData();
                             LoadNewData();
+                            thoigian=0;
                             calling=0;
                             paused=0;
                             quit3=1;
@@ -1173,6 +1229,7 @@ int main(int argc,char** argv )
                             LoadNewData();
                             calling=0;
                             paused=0;
+                            thoigian=0;
                             quit3=1;
                             trangthai=1;
                         }
@@ -1186,7 +1243,7 @@ int main(int argc,char** argv )
                 else if(!paused && !quit3){
                     pre2();
                     AImove(chedokho, trangthai);
-
+                    thoigian++;
                     if(calling != 0)
                     {
                         if(calling==11) UltimateSkill();
