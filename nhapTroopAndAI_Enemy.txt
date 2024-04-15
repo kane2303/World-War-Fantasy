@@ -982,6 +982,24 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
     }
 }
 
+void UpdateHighScore() {
+    ifstream fi("highscore.txt");
+    int diem[6];
+    for(int i=1; i<=5; i++) fi>>diem[i];
+    fi.close();
+
+    ofstream fo("highscore.txt");
+    int newscore = max(1111, 100000-frame);
+    for(int i=1; i<=5; i++)
+        if(newscore>diem[i]) {
+            for(int j=5; j>i; j--) diem[j]=diem[j-1];
+            diem[i]=newscore;
+            break;
+        }
+    for(int i=1; i<=5; i++) fo<<diem[i]<<"\n";
+    fo.close();
+}
+
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~end merge 2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 int main( int argc, char* args[] )
@@ -1023,6 +1041,7 @@ int main( int argc, char* args[] )
             //User requests quit
             if( e.type == SDL_QUIT )
             {
+//                UpdateHighScore();
                 quit = true;
             }
         }
@@ -1068,8 +1087,8 @@ int main( int argc, char* args[] )
         SDL_RenderPresent( gRenderer );
 
         frame++;
-    }
 
+    }
 
 
 	//Free resources and close SDL
