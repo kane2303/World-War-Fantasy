@@ -1077,7 +1077,7 @@ int main(int argc,char** argv )
                 {
                     RBS();
                     if(NextB.handleEvent(&e)) chedokho=1;
-                    trangthai = 3;
+                    trangthai = 2;
                 }
             }
             if(trangthai==4){
