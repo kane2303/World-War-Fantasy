@@ -44,8 +44,9 @@ int trangthai=0;
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 Mix_Music *gMusic = NULL;
-Mix_Chunk *gWin = NULL;
-Mix_Chunk *gLose = NULL;
+Mix_Chunk *gHit = NULL;
+Mix_Chunk *gHit2 = NULL;
+Mix_Chunk *gThunder = NULL;
 Dot dot;
 
 TTF_Font* gFont = NULL;
@@ -53,6 +54,9 @@ TTF_Font* gFontRecord = NULL;
 void loadMedia()
 {
     gMusic = Mix_LoadMUS( "assets/music/nen2.wav" );
+    gHit = Mix_LoadWAV( "assets/music/sound1.wav" );
+    gHit2 = Mix_LoadWAV( "assets/music/sound2.wav" );
+    gThunder = Mix_LoadWAV( "assets/music/thunder_out.wav" );
 //    gWin = Mix_Loa
 
     Texturebackground2.SetTexture();
@@ -974,7 +978,7 @@ void PrintRecord()
     SDL_RenderClear(gRenderer);
     TextNxtC.rendermenu(0,0);
     SDL_Color goldColor= {255,215,0};
-    ifstream in("record.txt");
+    ifstream in("highscore.txt");
     string s;
     TTF_SetFontSize(gFont,70);
     int pos=200;
@@ -988,14 +992,17 @@ void PrintRecord()
     }
     TTF_SetFontSize(gFont,28);
 }
-void UpdateHighScore() {
-    ifstream fi("score.txt");
+
+void UpdateHighScore()
+{
+    ifstream fi("highscore.txt");
     int diem[6];
     for(int i=1; i<=5; i++) fi>>diem[i];
     fi.close();
 
-    ofstream fo("score.txt");
+    ofstream fo("highscore.txt");
     int newscore = max(1111, 100000-frame);
+    if(chedokho) newscore+=100000;
     for(int i=1; i<=5; i++)
         if(newscore>diem[i]) {
             for(int j=5; j>i; j--) diem[j]=diem[j-1];
@@ -1005,6 +1012,8 @@ void UpdateHighScore() {
     for(int i=1; i<=5; i++) fo<<diem[i]<<"\n";
     fo.close();
 }
+void RBS(){Mix_PlayChannel( -1, gHit, 0 );}
+void RBS3(){Mix_PlayChannel( -1, gThunder, 0 );}
 int main(int argc,char** argv )
 {
     Mix_OpenAudio( 54100, MIX_DEFAULT_FORMAT, 2, 2048 );
@@ -1016,8 +1025,6 @@ int main(int argc,char** argv )
     SDL_Event e;
     while( !quit )
     {
-
-
         int trangthaitruoc = trangthai;
         while( SDL_PollEvent( &e ) != 0 )
         {
@@ -1027,21 +1034,22 @@ int main(int argc,char** argv )
             }
             if(trangthai==0)
             {
-                if(StartA.handleEvent(&e)) trangthai = 1;
-                if(StartB.handleEvent(&e)) {LoadData();}
-                if(StartD.handleEvent(&e)) trangthai=4;
-                if(StartC.handleEvent(&e)) quit = 1;
+                if(StartA.handleEvent(&e)) trangthai = 1,RBS();
+                if(StartB.handleEvent(&e)) {LoadData(),RBS();}
+                if(StartD.handleEvent(&e)) trangthai=4,RBS();
+                if(StartC.handleEvent(&e)) quit = 1,RBS();
             }
             else if( trangthai == 1 )
             {
                 if( NextA.handleEvent(&e) || NextB.handleEvent(&e) )
                 {
+                    RBS();
                     if(NextB.handleEvent(&e)) chedokho=1;
                     trangthai = 2;
                 }
             }
             if(trangthai==4){
-                if(StartE.handleEvent(&e)) trangthai=0;
+                if(StartE.handleEvent(&e)) trangthai=0,RBS();
             }
         }
         if(trangthai==4)
@@ -1079,8 +1087,9 @@ int main(int argc,char** argv )
                 {
                     if(EndGame == -1)
                     {
-                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Quitbut.handleEvent(&e)) quit = 1,RBS();
                         if(Nwgbut.handleEvent(&e))  {
+                            RBS();
                             ClearData();
                             LoadNewData();
                             calling=0;
@@ -1095,9 +1104,10 @@ int main(int argc,char** argv )
                     }
                     if(paused)
                     {
-                        if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();}
-                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();RBS();}
+                        if(Quitbut.handleEvent(&e)) quit = 1,RBS();
                         if(Nwgbut.handleEvent(&e)) {
+                            RBS();
                             ClearData();
                             LoadNewData();
                             calling=0;
@@ -1108,14 +1118,15 @@ int main(int argc,char** argv )
                     }
 
                     dot.handleEvent(e);
-                    if(TroopsIcon1.handleEvent(&e)) calling = 1;
-                    if(TroopsIcon2.handleEvent(&e)) calling = 2;
-                    if(TroopsIcon3.handleEvent(&e)) calling = 3;
-                    if(Ultimate.handleEvent(&e)) calling =4;
+                    if(TroopsIcon1.handleEvent(&e)) calling = 1,RBS();
+                    if(TroopsIcon2.handleEvent(&e)) calling = 2,RBS();
+                    if(TroopsIcon3.handleEvent(&e)) calling = 3,RBS();
+                    if(Ultimate.handleEvent(&e)) calling =4,RBS3();
                     if(e.type == SDL_KEYDOWN)
                     {
                         if(e.key.keysym.sym==SDLK_p)
                         {
+                            RBS();
                             paused=1;
                             SaveData();
                         }
@@ -1190,9 +1201,10 @@ int main(int argc,char** argv )
                     }
                     if(paused)
                     {
-                        if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();}
-                        if(Quitbut.handleEvent(&e)) quit = 1;
+                        if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();RBS();}
+                        if(Quitbut.handleEvent(&e)) quit = 1,RBS();
                         if(Nwgbut.handleEvent(&e)) {
+                            RBS();
                             ClearData();
                             LoadNewData();
                             calling=0;
@@ -1203,14 +1215,15 @@ int main(int argc,char** argv )
                     }
 
                     dot.handleEvent(e);
-                    if(TroopsIcon4.handleEvent(&e)) calling = 4;
-                    if(TroopsIcon5.handleEvent(&e)) calling = 5;
-                    if(TroopsIcon6.handleEvent(&e)) calling = 6;
-                    if(TroopsIcon7.handleEvent(&e)) calling = 7;
+                    if(TroopsIcon4.handleEvent(&e)) calling = 4,RBS();
+                    if(TroopsIcon5.handleEvent(&e)) calling = 5,RBS();
+                    if(TroopsIcon6.handleEvent(&e)) calling = 6,RBS();
+                    if(TroopsIcon7.handleEvent(&e)) calling = 7,RBS();
                     if(e.type == SDL_KEYDOWN)
                     {
                         if(e.key.keysym.sym==SDLK_p)
                         {
+                            RBS();
                             paused=1;
                             SaveData();
                         }
