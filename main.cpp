@@ -38,8 +38,8 @@ LTexture TextCntbut,TextQuitbut,TextNwgbut,Textwin,Textlose,TextRecord;
 LButton TroopsIcon4,TroopsIcon5,TroopsIcon6,TroopsIcon7;
 LTexture TextTroop4,TextTroop5,TextTroop6,TextTroop7,Textplayertime;
 
-LButton Ultimate;
-LTexture TextUltimate;
+LButton Ultimate,MusicB;
+LTexture TextUltimate,TextMusicB,TextMusicB2,TextMusicB3;
 int trangthai=0;
 SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
@@ -51,12 +51,14 @@ Dot dot;
 
 TTF_Font* gFont = NULL;
 TTF_Font* gFontRecord = NULL;
+
 void loadMedia()
 {
     gMusic = Mix_LoadMUS( "assets/music/nen2.wav" );
     gHit = Mix_LoadWAV( "assets/music/sound1.wav" );
     gHit2 = Mix_LoadWAV( "assets/music/sound2.wav" );
     gThunder = Mix_LoadWAV( "assets/music/thunder_out.wav" );
+    TextMusicB.loadFromFile("assets/button/soundbutton.png");
 //    gWin = Mix_Loa
 
     Texturebackground2.SetTexture();
@@ -886,6 +888,21 @@ void UltimateSkill() { //ứng dụng thuật toán dijkstra
 //        cout<<"\n\n";
     }
 }
+void WhiteData() {
+    ofstream fo("data.txt");
+
+    fo<<0<<" "<<0<<" "<<0<<" "<<0<<" "<<200<<" "<<1<<" "<<0<<"\n";
+
+    fo<<0<<"\n";
+    fo<<0<<"\n";
+
+    danhsachquan.clear();
+    while(!binhchungplayer.empty()) {
+        binhchungplayer.pop();
+    }
+
+    fo.close();
+}
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
 /**                                                                              end merge                                      **/
@@ -961,6 +978,7 @@ void Runpause()
 {
     SDL_RenderClear(gRenderer);
     Pausing.rendermenu(0,0);
+    MusicB.render(&TextMusicB,5,5,50,50,50);
     Cntbut.render( &TextCntbut,400,300,500,100,100);
     Quitbut.render( &TextQuitbut,400,500,500,100,100);
     Nwgbut.render( &TextNwgbut,400,400,500,100,100);
@@ -1014,6 +1032,19 @@ void UpdateHighScore()
 }
 void RBS(){Mix_PlayChannel( -1, gHit, 0 );}
 void RBS3(){Mix_PlayChannel( -1, gThunder, 0 );}
+void handleSound()
+{
+    if( Mix_PausedMusic() == 1 )
+    {
+        TextMusicB.loadFromFile("assets/button/soundbutton.png");
+        Mix_ResumeMusic();
+    }
+    else
+    {
+        TextMusicB.loadFromFile("assets/button/soundbutton2.png");
+        Mix_PauseMusic();
+    }
+}
 int main(int argc,char** argv )
 {
     Mix_OpenAudio( 54100, MIX_DEFAULT_FORMAT, 2, 2048 );
@@ -1028,6 +1059,7 @@ int main(int argc,char** argv )
         int trangthaitruoc = trangthai;
         while( SDL_PollEvent( &e ) != 0 )
         {
+            if(MusicB.handleEvent(&e)) handleSound();
             if( e.type == SDL_QUIT )
             {
                 quit = true;
@@ -1060,6 +1092,7 @@ int main(int argc,char** argv )
         if( trangthaitruoc == 0)
         {
             Texturebackground1.rendermenu(0,0);
+            MusicB.render(&TextMusicB,5,5,50,50,50);
             StartA.render( &TextStA,460,200,375,90,90);
             StartB.render( &TextStB,460,300,375,90,90);
             StartD.render( &TextStD,460,400,375,90,90);
@@ -1104,6 +1137,7 @@ int main(int argc,char** argv )
                     }
                     if(paused)
                     {
+                        if(MusicB.handleEvent(&e)) handleSound();
                         if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();RBS();}
                         if(Quitbut.handleEvent(&e)) quit = 1,RBS();
                         if(Nwgbut.handleEvent(&e)) {
@@ -1186,7 +1220,7 @@ int main(int argc,char** argv )
             CreateTroop(9, 0, chedokho);
             CreateTroop(9, 1, chedokho);
             ///vòng lặp chính đời 3
-            bool quit3 = 0;
+            bool quit3 = 0,RR=0;
 
             while(!quit3)
             {
@@ -1245,7 +1279,11 @@ int main(int argc,char** argv )
                 {
                     if(EndGame==-1) Runend(Textlose);
                     else {
-                        UpdateHighScore();
+                        if(!RR){
+                            RR=1;
+                            UpdateHighScore();
+                            ClearData();
+                        }
                         Runend(Textwin);
                     }
                 }
