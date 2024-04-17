@@ -1077,7 +1077,7 @@ int main(int argc,char** argv )
                 {
                     RBS();
                     if(NextB.handleEvent(&e)) chedokho=1;
-                    trangthai = 2;
+                    trangthai = 3;
                 }
             }
             if(trangthai==4){
@@ -1235,6 +1235,7 @@ int main(int argc,char** argv )
                     }
                     if(paused)
                     {
+                        if(MusicB.handleEvent(&e)) handleSound();
                         if(Cntbut.handleEvent(&e)) {paused = 0; LoadData();RBS();}
                         if(Quitbut.handleEvent(&e)) quit = 1,RBS();
                         if(Nwgbut.handleEvent(&e)) {
